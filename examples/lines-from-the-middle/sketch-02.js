@@ -48,4 +48,7 @@ if(p1x !== width/2 && p1y !== 0){
   // for the next round
   p2x = p1x;
   p2y = p1y;
+  if(p1x === width/2){
+    saveCanvas("img","png");
+  }
 }
