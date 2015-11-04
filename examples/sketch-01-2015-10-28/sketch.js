@@ -4,6 +4,7 @@ var weite = 20;
 var hoehe = weite;
 var myhue = 0;
 
+
 // getting started with p5js
 function setup(){
  // this is executed once
@@ -13,7 +14,6 @@ function setup(){
 }
 
 function draw(){
-
   // background(0, 255);
   noStroke();
   // strokeWeight(5);
@@ -22,7 +22,7 @@ function draw(){
   myhue= myhue + 1;
 
 strokeWeight(10);
-stroke(100,0,100,100);
+stroke(100,0,100,200);
 line(0,height/2,width,height/2);
 strokeWeight(20);
 
@@ -37,6 +37,7 @@ noStroke();
   // fill(0,255,0); // rgb
   fill(0,0,100, 100); // rgba
   ellipse(x,y, weite, hoehe);
+
 // this is executed all the time
   x = x + 5;
  y =  (height/2) + random(-5,5);
