@@ -2,6 +2,7 @@
 // getting started with p5js
 function setup(){
   // executed once
+  text("just look into\nthe console", 10,10);
 
   // console.log(255%100);
 var i = 23;
