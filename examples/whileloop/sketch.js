@@ -1,6 +1,7 @@
 
-var val = 1;
 // getting started with p5js
+// this is a example for the shile loop
+
 function setup(){
   // executed once
   createCanvas(400,400);

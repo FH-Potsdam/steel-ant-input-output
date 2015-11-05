@@ -3,10 +3,17 @@
 function setup(){
   // executed once
 
-  // console.log(255%100);
-var i = 23;
+  text("just look into\nthe console", 10,10);
+
   if("1" === 1){
-    console.log("is the same");
+    console.log("This is the same");
+  }else{
+    console.log("This is not the same");
+
+  }
+
+  if("1" == 1){
+    console.log("Hm. A string is the same as the number one?\nThis can't be...");
   }
 }
 

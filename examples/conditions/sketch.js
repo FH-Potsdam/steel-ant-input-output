@@ -3,6 +3,7 @@ var val = 1;
 // getting started with p5js
 function setup(){
   // executed once
+  text("just look into\nthe console", 10,10);
 
 
   if(val === 0){
