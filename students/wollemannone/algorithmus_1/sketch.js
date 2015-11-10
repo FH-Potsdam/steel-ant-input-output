@@ -1,4 +1,6 @@
 // getting started with p5js
+var x = 0;
+var y = 0;
 
 
 //this is executed once
@@ -19,9 +21,9 @@ function draw(){
 	background(0);
 	fill(255,0,100);
 	ellipse(x,y,50,50);
-	
 
-	
+
+
 
 p1 = {x: 100, y: 26};
 p2 = {x: 150, y: 300};
