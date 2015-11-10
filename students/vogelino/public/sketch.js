@@ -1,46 +1,119 @@
 'use strict';
 
-var props = {};
+// BASE VARIABLES
+var props = {
+	groups: [],
+	groupsAmount: 3,
+	availableFormId: 0,
+	circleMinSize: 10,
+	lineWeight: 1,
+	backgroundColor: 'whitesmoke',
+	wrapperSize: 50,
+	colorIndex: 0,
+	mainBrightness: 90,
+	mainColor: false
+};
 
+// SETUP
 function setup() {
-	var canvas = createCanvas(windowWidth, windowHeight);
-	canvas.position(0, 0);
-	canvas.class('p5-canevas');
-	canvas.parent('main-canevas');
-
-	colorMode(HSB, 360, 100, 100, 100);
-
-	props = getDefaults();
+	initCanvas();
 
 	background(props.backgroundColor);
-	props.mainColor = getColor(90, false, 0);
-	generateGroups();
-	drawConnections(props.groups[0]);
+	props.mainColor = color(0, 0, props.mainBrightness, 100);
 
-	props.mainColor = getColor(75, false, 0);
-	generateGroups();
-	drawConnections(props.groups[1]);
-
-	props.mainColor = getColor(30, false, 0);
-	generateGroups();
-	drawConnections(props.groups[2]);
+	console.log('Generating ' + props.groupsAmount + ' groups');
+	props.groups = addGroups(props.groupsAmount);
+	console.log(props.groupsAmount + ' groups generated');
 }
 
 function draw() {
 	noLoop();
 }
 
-function getDefaults() {
-	return {
-		availableFormId: 0,
-		circleMinSize: 10,
-		connectionWeight: 2,
-		backgroundColor: 'whitesmoke',
-		groups: [],
-		wrapperSize: 50,
-		colorIndex: 0,
-		mainColor: getColor()
+function initCanvas() {
+	createCanvas(windowWidth, windowHeight);
+	colorMode(HSB, 360, 100, 100, 100);
+}
+
+// GENERATE CONTENTS
+function addGroups(groupsAmount) {
+	var groups = [];
+	for (var i = 1; i <= groupsAmount; i++) {
+		var mainBrightness = props.mainBrightness;
+		var mainColor = props.mainColor;
+
+		var oldBrightness = mainColor._getBrightness();
+		groups.push(addGroup(i));
+		var newBrightness = oldBrightness - i * (groupsAmount * (groupsAmount * i));
+
+		props.mainColor = color(0, 0, newBrightness, 100);
+	}
+	return groups;
+}
+
+function addGroup(id) {
+	var rows = Math.ceil(width / props.wrapperSize) + 1;
+	var columns = Math.ceil(width / props.wrapperSize) + 1;
+	var formPosX = 0 - props.wrapperSize / 2;
+	var formPosY = formPosX;
+	var columnPosX = formPosX;
+	var rowPosY = formPosY;
+	var forms = [];
+	var groupId = props.groups.length;
+
+	for (var row = 1; row <= rows; row++) {
+		for (var column = 1; column <= columns; column++) {
+			var form = addForm(props.availableFormId, props.mainColor, columnPosX, rowPosY, props.wrapperSize, row, column);
+			forms.push(form);
+			columnPosX = column === columns ? formPosX : columnPosX + props.wrapperSize;
+			props.availableFormId++;
+		};
+		rowPosY = row === rows ? formPosY : rowPosY + props.wrapperSize;
 	};
+
+	var group = {
+		id: id,
+		rows: rows,
+		columns: columns,
+		forms: forms
+	};
+
+	group.connections = addConnections(group);
+
+	console.log('Generated Group with id: ' + group.id, group);
+	return group;
+}
+
+function addForm(id, circleColor, x, y, size, row, column) {
+	var hasCircle = random(0, 2) < 1;
+	var circleSize = random(props.circleMinSize, props.wrapperSize - 5);
+	var circleX = x + props.wrapperSize / 2;
+	var circleY = y + props.wrapperSize / 2;
+	var form = {
+		id: id,
+		x: x,
+		y: y,
+		row: row,
+		column: column,
+		circle: hasCircle ? false : {
+			x: circleX,
+			y: circleY,
+			size: circleSize,
+			circleColor: circleColor
+		}
+	};
+	if (form.circle) {
+		var circleCenter = circleSize / 2;
+		form.circle.arcPoints = {
+			top: { x: circleX, y: circleY - circleCenter },
+			bottom: { x: circleX, y: circleY + circleCenter },
+			left: { x: circleX - circleCenter, y: circleY },
+			right: { x: circleX + circleCenter, y: circleY }
+		};
+	}
+
+	drawForm(form);
+	return form;
 }
 
 function getExtremeArcPoints(firstCircle, nextCircle) {
@@ -74,12 +147,15 @@ function drawForm(wrapper) {
 	noStroke();
 	rect(x, y, props.wrapperSize, props.wrapperSize);
 	if (circle) {
-		fill(circle.circleColor);
+		noFill();
+		stroke(circle.circleColor);
+		strokeWeight(props.lineWeight);
 		ellipse(circle.x, circle.y, circle.size, circle.size);
 	}
 }
 
-function drawConnections(group) {
+function addConnections(group) {
+	var connections = [];
 	var columns = group.columns;
 	var rows = group.rows;
 
@@ -95,27 +171,26 @@ function drawConnections(group) {
 
 		if (!isFirstRow) {
 			topSibling = getFormByPosition(group, form.row - 1, form.column);
-			drawConnection('top', form, topSibling);
+			connections.push(addConnection('top', form, topSibling));
 		}
 		if (!isFirstColumn) {
 			leftSibling = getFormByPosition(group, form.row, form.column - 1);
-			drawConnection('left', form, leftSibling);
+			connections.push(addConnection('left', form, leftSibling));
 		}
 		if (!isLastRow) {
 			bottomSibling = getFormByPosition(group, form.row + 1, form.column);
-			drawConnection('bottom', form, bottomSibling);
+			connections.push(addConnection('bottom', form, bottomSibling));
 		}
 		if (!isLastColumn) {
 			rightSibling = getFormByPosition(group, form.row, form.column + 1);
-			drawConnection('right', form, rightSibling);
+			connections.push(addConnection('right', form, rightSibling));
 		}
 	});
+
+	return connections;
 }
 
-function drawConnection(dir, startForm, endForm) {
-	if (!endForm) {
-		debugger;
-	};
+function addConnection(dir, startForm, endForm) {
 	if (!startForm.circle || !endForm.circle) {
 		return;
 	}
@@ -141,40 +216,13 @@ function drawConnection(dir, startForm, endForm) {
 	}
 
 	stroke(endForm.circle.circleColor);
-	strokeWeight(props.connectionWeight);
+	strokeWeight(props.lineWeight);
 	line(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+
+	return { startPoint: startPoint, endPoint: endPoint };
 }
 
-function addForm(id, x, y, size, row, column) {
-	var hasCircle = random(0, 2) < 1;
-	var circleSize = random(props.circleMinSize, props.wrapperSize - 5);
-	var circleX = x + props.wrapperSize / 2;
-	var circleY = y + props.wrapperSize / 2;
-	var form = {
-		id: id,
-		x: x,
-		y: y,
-		row: row,
-		column: column,
-		circle: hasCircle ? false : {
-			x: circleX,
-			y: circleY,
-			size: circleSize,
-			circleColor: props.mainColor
-		}
-	};
-	if (form.circle) {
-		var circleCenter = circleSize / 2;
-		form.circle.arcPoints = {
-			top: { x: circleX, y: circleY - circleCenter },
-			bottom: { x: circleX, y: circleY + circleCenter },
-			left: { x: circleX - circleCenter, y: circleY },
-			right: { x: circleX + circleCenter, y: circleY }
-		};
-	}
-	return form;
-}
-
+// GETTERS
 function getFormById(id) {
 	var allForms = [];
 	props.groups.forEach(function (group) {
@@ -189,41 +237,4 @@ function getFormByPosition(group, row, column) {
 	return group.forms.filter(function (form) {
 		return form.row === row && form.column == column;
 	})[0];
-}
-
-function getColor(bri, hue, sat, alpha) {
-	bri = bri >= 0 ? bri : random(50, 75);
-	hue = hue >= 0 ? hue : random(190, 200);
-	sat = sat >= 0 ? sat : random(33, 66);
-	alpha = alpha >= 0 ? alpha : 100;
-	return color(hue, sat, bri, alpha);
-}
-
-function generateGroups() {
-	var rows = Math.floor(width / props.wrapperSize);
-	var columns = Math.floor(width / props.wrapperSize);
-	var formPosX = 0;
-	var formPosY = 0;
-	var columnPosX = formPosX;
-	var rowPosY = formPosY;
-	var forms = [];
-	var groupId = props.groups.length;
-
-	for (var row = 1; row <= rows; row++) {
-		for (var column = 1; column <= columns; column++) {
-			var form = addForm(props.availableFormId, columnPosX, rowPosY, props.wrapperSize, row, column);
-			drawForm(form);
-			forms.push(form);
-			columnPosX = column === columns ? formPosX : columnPosX + props.wrapperSize;
-			props.availableFormId++;
-		};
-		rowPosY = row === rows ? formPosY : rowPosY + props.wrapperSize;
-	};
-
-	props.groups.push({
-		id: props.groups.length,
-		rows: rows,
-		columns: columns,
-		forms: forms
-	});
 }
