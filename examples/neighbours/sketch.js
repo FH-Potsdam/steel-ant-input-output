@@ -171,9 +171,9 @@ function draw(){
   nextpoint = points[nextindex];
   line(startpoint.x, startpoint.y, nextpoint.x, nextpoint.y );
   startpoint = nextpoint;
- saveCanvas("seq-"+pad(frameCount, 5),"png");
- if(frameCount >= 1000){
-  noLoop();
+ // saveCanvas("seq-"+pad(frameCount, 5),"png");
+ // if(frameCount >= 1000){
+ //  noLoop();
 
- }
+ // }
 }
