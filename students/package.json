@@ -4,9 +4,10 @@
   "description": "file browser",
   "main": "index.js",
   "scripts": {
+    "start":"node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "fabiantheblind",
   "license": "MIT",
   "dependencies": {
     "express": "^4.13.3",
