@@ -17,14 +17,11 @@ title: Input Output (Eingabe Ausgabe)
 │   ├── [neighbours](examples/neighbours/)   
 │   ├── [primitive-shapes](examples/primitive-shapes/)   
 │   ├── [quadrants](examples/quadrants/)   
-│   │   └── libraries   
 │   ├── [saveFrame](examples/saveFrame)   
 │   ├── [stick-figure](examples/stick-figure)   
 │   ├── [time](examples/time)   
 │   ├── [typesafe](examples/typesafe)   
 │   └── [whileloop](examples/whileloop)   
-├── kits   
-├── scripts   
 └── students   
     ├── Logetcrea   
     │   └── [Algorithm1](students/Logetcrea/Algorithm1)   
