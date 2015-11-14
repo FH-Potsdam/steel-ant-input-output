@@ -5,6 +5,7 @@ var i = 0; // this is just for displaying things
 var a = 0;// this is just for displaying things
 function setup() {
   //executed once
+
 }
 
 function draw() {

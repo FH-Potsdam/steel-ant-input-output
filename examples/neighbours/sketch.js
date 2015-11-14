@@ -1,7 +1,7 @@
 // getting started with p5js
 
-var w = 300;
-var h = 400;
+var w = 500;
+var h = 100;
 var step = 10;
 var points = [];
 var startpoint = null;
@@ -143,7 +143,8 @@ return neighbours;
 
 
 function setup(){
-  createCanvas(w,h);
+var canvas = createCanvas(w,h);
+canvas.parent('sketch');
   var counter = 0;
     for (var x = step; x < w; x += step) {
     for (var y = step; y < h; y += step) {

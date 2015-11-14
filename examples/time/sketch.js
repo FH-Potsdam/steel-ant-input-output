@@ -2,6 +2,9 @@
 // getting started with p5js
 function setup(){
   // executed once
+var canvas = createCanvas(100,100);
+canvas.parent('sketch');
+  text("just look into\nthe console", 10,10);
 var dt = new Date(); // this gets the date object
 
 var hour = dt.getHours(); // now get the hour

@@ -4,8 +4,8 @@
 var quadrants = [];
 var step = 25;
 function setup() {
-
-  createCanvas(400, 400);
+var canvas = createCanvas(400, 400);
+canvas.parent('sketch');
   for (var x = 0; x < width; x += step) {
     for (var y = 0; y < height; y += step) {
       rect(x, y, step, step);

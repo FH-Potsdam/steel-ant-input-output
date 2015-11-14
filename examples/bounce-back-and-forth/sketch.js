@@ -1,11 +1,14 @@
 // simple bouncing from right to left
 // @author fabiantheblind
 var hit = false;
+var w = 100;
+var h = 100;
 var x = 0;
-var y = 250;
+var y = h/2;
 
 function setup() {
-  createCanvas(500, 500);
+var canvas = createCanvas(w, h);
+canvas.parent('sketch');
 }
 
 function draw() {
