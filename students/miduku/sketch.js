@@ -17,7 +17,7 @@ var h3 = 0,
 // vars for line
 var eX, eY, // position
 		eX2, eY2,
-		eW = 2; // width
+		eW = 1; // width
 
 // for bounces on wall
 var bounces = 0,
@@ -29,6 +29,8 @@ var bounces = 0,
 // angle: 0 to 360 ... duh
 var angle,
 		radius ; // sets the speed
+
+var angleOff = 0.0;
 
 var quadrant;
 
@@ -44,29 +46,30 @@ var tWallPosX = [],
 
 // for filling whole document
 var w = window,
-		wX = w.innerWidth,
-		wY = w.innerHeight;
+		wX = w.innerWidth/2,
+		wY = w.innerHeight/2;
 
 
 /*
 * only executed once
 */
 function setup(){
-	createCanvas(wX, wY);
-	// createCanvas(1600/2, 900/2);
-
 	// change color mode to hsl
 	colorMode(HSB, 360, 100, 100, 100);
+	var bgrColor = color(h3, s3, b3);
+
+	var c = createCanvas(wX, wY);
+			c.parent("container");
 
 	// start line at...
 	eX = random(0,width);
 	eY = 0;
 	angle = radians(random(1,179));
-	radius = 10; //speed of line drawing
+	radius = 20; //speed of line drawing
 	bouncesMax = 4;
 
 	// rectangle/background
-	background(h3, s3, b3);
+	background(bgrColor);
 }
 
 
@@ -74,6 +77,13 @@ function setup(){
 * this will be executed all the time
 */
 function draw(){
+	// angleOff += 0.01;
+	// var nOff = noise(angleOff)*10;
+
+	// jitter
+	eW = random(0.5,1.5);
+	angle += radians(random(-1,1));
+
 	// translate from angle: polar to cartesian coordianates
 	eX += cartesianX(radius,angle);
 	eY += cartesianY(radius,angle);
@@ -184,13 +194,7 @@ function draw(){
 		bounces = 0; // reset bounces counter
 		frameCount = 1;
 	}
-	// "cleaning on isle five"... reset the canvas
-	if (bouncesTotal%(bouncesMax*4) === (bouncesMax*4)-1) {
-		fill(h3,s3,b3,90);
-		noStroke();
-		rect(0,0, width, height);
-		frameCount = 1;
-	}
+
 	// if at wall-bounce, add thing
 	if (eX === width || eY === height || eX === 0 || eY === 0) {
 
@@ -212,13 +216,14 @@ function draw(){
 		bouncesTotal++;
 	}
 
-
+	// fadeout effect
+	background(h3, s3, b3, 1);
 
 	// get last coordinate for drawing a line
 	eX2 = eX;
 	eY2 = eY;
 
-	console.log(bouncesTotal);
+	console.log(angle);
 }
 
 
@@ -247,16 +252,15 @@ function cartesianY(radius,angle) {
 var Dot = function() {
 	this.x = eX;
 	this.y = eY;
-	this.width = eW;
-	this.color = color(h,s,b,a);
-	// this.color = color(h2,50,50,50);
+	// this.width = eW;
+	// this.color = color(h,s,b,a);
 };
 
 // show method
 Dot.prototype.show = function() {
 	noStroke();
-	fill(this.color);
-	ellipse(this.x,this.y, this.width*5,this.width*5);
+	// fill(this.color);
+	// ellipse(this.x,this.y, this.width*5,this.width*5);
 };
 
 // Triangle constructor

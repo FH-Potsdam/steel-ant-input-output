@@ -2,10 +2,19 @@
   box-sizing: border-box;
   font-size: 0;
   line-height: 0;
+  height: 100%;
 }
 
 html,
 body {
 	margin: 0;
 	padding: 0;
+	background-color: hsl(0,0%, 15%);
+}
+
+#container {
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
 }
