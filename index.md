@@ -49,19 +49,19 @@ title: Input Output (Eingabe Ausgabe)
     │   └── libraries   
     ├── [Q-rec](students/Q-rec)   
     ├── antsteelmule   
-    │   ├── [algo digital1](students/algo digital1)   
+    │   ├── [algo digital1](students/algo-digital1)   
     │   │   └── lib   
     │   │       └── addons   
-    │   ├── [algo digital2](students/algo digital2)   
+    │   ├── [algo-digital2](students/algo-digital2)   
     │   │   └── lib   
     │   │       └── addons   
-    │   ├── [algo digital3](students/algo digital3)   
+    │   ├── [algo-digital3](students/algo-digital3)   
     │   │   └── lib   
     │   │       └── addons   
-    │   ├── [algo digital4](students/algo digital4)   
+    │   ├── [algo-digital4](students/algo-digital4)   
     │   │   └── lib   
     │   │       └── addons   
-    │   └── [algo digital5](students/algo digital5)   
+    │   └── [algo-digital5](students/algo-digital5)   
     │       └── lib   
     │           └── addons   
     ├── dariaDunkelbier   
