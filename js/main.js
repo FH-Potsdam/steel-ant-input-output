@@ -7,7 +7,7 @@ $(document).ready(function() {
     var val = srcs[i].src;
     // console.log(val);
     if (val.length === 0) continue;
-    if (val.substring(0, 17) === 'http://FH-Potsdam' || val.substring(0, 14) === 'http://0.0.0.0'|| val.substring(0, 21) === 'http://127.0.0.1:4000') {
+    if (val.substring(0, 17) === 'http://fh-potsdam' || val.substring(0, 14) === 'http://0.0.0.0'|| val.substring(0, 21) === 'http://127.0.0.1:4000') {
       src = val;
       console.log(src);
       break;
