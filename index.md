@@ -2,7 +2,7 @@
 layout: default
 title: Input Output (Eingabe Ausgabe)
 ---
-   
+
 ├── examples     
 │   ├── [bounce-back-and-forth](examples/bounce-back-and-forth/)   
 │   ├── [center-canvas](examples/center-canvas/)   
