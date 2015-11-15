@@ -44,7 +44,6 @@ title: Input Output (Eingabe Ausgabe)
     ├── [nikoripka](students/nikoripka)   
     ├── [swjo](students/swjo)   
     ├── vogelino   
-    │   ├── [public](students/vogelino/public)   
     |   ├── [molecular-networks-p5-algorithm](https://github.com/vogelino/molecular-networks-p5-algorithm)    
     |   └── [vogelino.github.io/molecular-networks-p5-algorithm](http://vogelino.github.io/molecular-networks-p5-algorithm/)    
     └── wollemannone   
