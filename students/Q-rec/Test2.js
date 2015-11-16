@@ -152,6 +152,7 @@ return neighbours;
 
 function setup(){
 
+
   frameRate([20]);
 
   createCanvas(w,h);
@@ -210,18 +211,10 @@ function draw(){
 
 
     break;
-    // default:
-    // break;
   }
 
 
   for(var i = 0; i < points.length;i++){
-    //fill(0);
-    //noStroke();
-    //text(points[i].ndx, points[i].x + 5, points[i].y);
-
-    //ellipse(points[i].x, points[i].y,5,5 );
-
   }
 
   var nearest_neighbours = get_neighbours(startpoint.ndx, points, w, h, step);
@@ -242,14 +235,14 @@ function draw(){
       case 4:
       // links 4
       line(startpoint.x, startpoint.y,0, height/2);
-      saveCanvas('linie','png');
+      saveCanvas('linie','jpg');
       noLoop();
       startpoint = {"x":0, "y":height/2,"ndx":null};
 
       break;
       case 36:
       line(startpoint.x, startpoint.y,width/2, 0);
-      saveCanvas('linie','png');
+      saveCanvas('linie','jpg');
       noLoop();
       startpoint = {"x":250, "y":0,"ndx":null};
       //oben 36
@@ -258,7 +251,7 @@ function draw(){
       break;
       case 76:
       line(startpoint.x, startpoint.y,width, height/2);
-      saveCanvas('linie','png');
+      saveCanvas('linie','jpg');
       noLoop();
       startpoint = {"x":width, "y":height/2,"ndx":null};
       // rechts 76
@@ -267,26 +260,12 @@ function draw(){
       break;
       case 44:
       line(startpoint.x, startpoint.y,width/2, height);
-      saveCanvas('linie','png');
+      saveCanvas('linie','jpg');
       noLoop;
       startpoint = {"x":width/2, "y":height,"ndx":null};
       // 44 unten
-
-
       break;
-      // default:
-      // break;
     }
-    // if(nextpoint.ndx === start_indicies[j]){
-    //   startpoint=(0,250);
-    // }
   }
- // saveCanvas("seq-"+pad(frameCount, 5),"png");
- // if(frameCount >= 1000){
- //  noLoop();
-
- // }
-
-
 
 }
