@@ -1,4 +1,5 @@
 .DS_Store
+.publish
 # nodejs and web dev
 node_modules
 bower_components
