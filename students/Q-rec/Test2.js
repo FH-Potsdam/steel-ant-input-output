@@ -187,6 +187,33 @@ function pad(n, width, z) {
 
 
 function draw(){
+  switch(startpoint.ndx){
+    case 4:
+    // links 4
+    line(0,startpoint.y, startpoint.x,startpoint.y);
+
+    break;
+    case 36:
+    line(startpoint.x, 0, startpoint.x,startpoint.y);
+    //oben 36
+
+
+    break;
+    case 76:
+    line(width,startpoint.y, startpoint.x, startpoint.y);
+    // rechts 76
+
+
+    break;
+    case 44:
+    line(startpoint.x, height, startpoint.x, startpoint.y);
+    // 44 unten
+
+
+    break;
+    // default:
+    // break;
+  }
 
 
   for(var i = 0; i < points.length;i++){
