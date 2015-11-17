@@ -1,0 +1,195 @@
+.
+├── _layouts
+├── bin
+├── css
+├── examples
+│   ├── 2015-10-28
+│   │   ├── sketch-01
+│   │   │   └── lib
+│   │   │       └── addons
+│   │   └── sketch-02
+│   │       └── lib
+│   │           └── addons
+│   ├── bounce-back-and-forth
+│   ├── center-canvas
+│   ├── center-canvas-flexbox
+│   ├── colors
+│   ├── conditions
+│   ├── drawing-particle
+│   ├── empty
+│   ├── fiddle
+│   ├── forloops
+│   ├── images
+│   ├── lewitt154
+│   ├── lewitt422
+│   ├── lewitt462
+│   ├── lewitt630
+│   ├── lines-from-the-middle
+│   ├── local-server
+│   ├── modulo
+│   ├── mouse_trail
+│   ├── mouse_trails
+│   ├── neighbours
+│   ├── primitive-shapes
+│   ├── process-json
+│   ├── quadrants
+│   ├── saveFrame
+│   ├── stick-figure
+│   ├── time
+│   ├── typesafe
+│   └── whileloop
+├── js
+├── kits
+├── scripts
+│   └── choose color.app
+│       └── Contents
+│           ├── MacOS
+│           └── Resources
+│               ├── Scripts
+│               └── description.rtfd
+├── server
+│   └── mac
+└── students
+    ├── Logetcrea
+    │   └── Algorithm1
+    ├── Ninotschka
+    ├── Ourelius
+    │   ├── assets
+    │   │   ├── JavaScripts
+    │   │   └── images
+    │   └── libraries
+    ├── Q-rec
+    ├── antsteelmule
+    │   ├── algo-digital1
+    │   │   └── lib
+    │   │       └── addons
+    │   ├── algo-digital2
+    │   │   └── lib
+    │   │       └── addons
+    │   ├── algo-digital3
+    │   │   └── lib
+    │   │       └── addons
+    │   ├── algo-digital4
+    │   │   └── lib
+    │   │       └── addons
+    │   └── algo-digital5
+    │       └── lib
+    │           └── addons
+    ├── dariaDunkelbier
+    ├── dziewi
+    │   └── algorithmus1
+    │       └── lib
+    │           └── addons
+    ├── josues
+    │   └── lib
+    │       └── addons
+    ├── lpaubielsa
+    │   └── lib
+    │       └── addons
+    ├── martakarta
+    │   └── lib
+    │       └── addons
+    ├── miduku
+    │   └── assets
+    │       └── css
+    ├── nikoripka
+    ├── node_modules
+    │   ├── express
+    │   │   ├── lib
+    │   │   │   ├── middleware
+    │   │   │   └── router
+    │   │   └── node_modules
+    │   │       ├── accepts
+    │   │       │   └── node_modules
+    │   │       │       ├── mime-types
+    │   │       │       │   └── node_modules
+    │   │       │       │       └── mime-db
+    │   │       │       └── negotiator
+    │   │       │           └── lib
+    │   │       ├── array-flatten
+    │   │       ├── content-disposition
+    │   │       ├── content-type
+    │   │       ├── cookie
+    │   │       ├── cookie-signature
+    │   │       ├── debug
+    │   │       │   └── node_modules
+    │   │       │       └── ms
+    │   │       ├── depd
+    │   │       │   └── lib
+    │   │       │       └── compat
+    │   │       ├── escape-html
+    │   │       ├── etag
+    │   │       ├── finalhandler
+    │   │       │   └── node_modules
+    │   │       │       └── unpipe
+    │   │       ├── fresh
+    │   │       ├── merge-descriptors
+    │   │       ├── methods
+    │   │       ├── on-finished
+    │   │       │   └── node_modules
+    │   │       │       └── ee-first
+    │   │       ├── parseurl
+    │   │       ├── path-to-regexp
+    │   │       ├── proxy-addr
+    │   │       │   └── node_modules
+    │   │       │       ├── forwarded
+    │   │       │       └── ipaddr.js
+    │   │       │           ├── lib
+    │   │       │           ├── src
+    │   │       │           └── test
+    │   │       ├── qs
+    │   │       │   ├── lib
+    │   │       │   └── test
+    │   │       ├── range-parser
+    │   │       ├── send
+    │   │       │   └── node_modules
+    │   │       │       ├── destroy
+    │   │       │       ├── http-errors
+    │   │       │       │   └── node_modules
+    │   │       │       │       └── inherits
+    │   │       │       ├── mime
+    │   │       │       │   └── build
+    │   │       │       ├── ms
+    │   │       │       └── statuses
+    │   │       ├── serve-static
+    │   │       ├── type-is
+    │   │       │   └── node_modules
+    │   │       │       ├── media-typer
+    │   │       │       └── mime-types
+    │   │       │           └── node_modules
+    │   │       │               └── mime-db
+    │   │       ├── utils-merge
+    │   │       └── vary
+    │   └── serve-index
+    │       ├── node_modules
+    │       │   ├── accepts
+    │       │   │   └── node_modules
+    │       │   │       └── negotiator
+    │       │   │           └── lib
+    │       │   ├── batch
+    │       │   ├── debug
+    │       │   │   └── node_modules
+    │       │   │       └── ms
+    │       │   ├── escape-html
+    │       │   ├── http-errors
+    │       │   │   └── node_modules
+    │       │   │       ├── inherits
+    │       │   │       └── statuses
+    │       │   ├── mime-types
+    │       │   │   └── node_modules
+    │       │   │       └── mime-db
+    │       │   └── parseurl
+    │       └── public
+    │           └── icons
+    ├── swjo
+    ├── vogelino
+    │   ├── fonts
+    │   ├── images
+    │   ├── javascripts
+    │   └── stylesheets
+    │       └── generated
+    └── wollemannone
+        ├── algorithmus_1
+        └── algorithmus_2
+
+192 directories

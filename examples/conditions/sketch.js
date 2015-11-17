@@ -3,6 +3,8 @@ var val = 1;
 // getting started with p5js
 function setup(){
   // executed once
+  var canvas = createCanvas(300,100);
+  canvas.parent('sketch');
   text("just look into\nthe console", 10,10);
 
 

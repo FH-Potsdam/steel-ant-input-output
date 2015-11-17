@@ -5,6 +5,8 @@ var i = 0; // this is just for displaying things
 var a = 0;// this is just for displaying things
 function setup() {
   //executed once
+var canvas = createCanvas(400, 400);
+canvas.parent('sketch');
 }
 
 function draw() {

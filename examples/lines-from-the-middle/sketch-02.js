@@ -11,7 +11,7 @@ var numberOfSegments = 200;
 function setup() {
   var canvas = createCanvas(400, 400);
   canvas.parent('sketch');
-  background(128);
+  background(190);
 }
 
 function draw() {
@@ -28,14 +28,14 @@ function draw() {
   if (angle < 360) {
     angle++;
   }
-  stroke(0);// so we see something
+  stroke(190);// so we see something
   // set the startpoints of the line
   p1x = sin(radians(angle)) * width / 2;
   p1y = cos(radians(angle)) * height / 2;
   point(p1x, p1y); // this is just for checking how the values are
 
-  var n = noise(off) * 20; // calculate the noise value
-  off = off + 0.1; // increase the noise value
+  var n = noise(off) * 10; // calculate the noise value
+  off = off + 0.5; // increase the noise value
 
 if(p1x !== width/2 && p1y !== 0){
   // if we are not at the edges
@@ -43,12 +43,17 @@ if(p1x !== width/2 && p1y !== 0){
   p1y += n;
 }
   // draw a line
+  stroke(0);
   line(p1x, p1y, p2x, p2y);
   // now pass the current points into the last points
   // for the next round
   p2x = p1x;
   p2y = p1y;
+<<<<<<< Updated upstream
   if(p1x === width/2){
-    saveCanvas("img","png");
+    // saveCanvas("img","png");
   }
 }
+=======
+}
+>>>>>>> Stashed changes

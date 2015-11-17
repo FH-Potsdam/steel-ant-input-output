@@ -1,0 +1,11 @@
+/*shows how to center the canvas in its container using flexbox*/
+#container{
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+canvas {
+
+}

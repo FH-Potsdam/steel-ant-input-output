@@ -1,0 +1,8 @@
+name: Eingabe Ausgabe Steel Ant
+markdown: redcarpet
+highlighter: pygments
+baseurl: /steel-ant-input-output
+mail: you@example.com
+sass:
+  sass_dir: _sass
+  style: :compressed
