@@ -7,7 +7,8 @@ var a = 100;
 function setup(){
   // executed once
   colorMode(HSB,360,100,100,100);
-  createCanvas(400,400);
+var canvas = createCanvas(400,400);
+canvas.parent('sketch');
 }
 
 

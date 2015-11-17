@@ -4,6 +4,8 @@
 
 This is a unified repository for the seminar "Eingabe, Ausgabe. Grundlagen der prozessorientierten Gestaltung"  
 
+See the examples and student works we have so far here --> [http://fh-potsdam.github.io/steel-ant-input-output/](http://fh-potsdam.github.io/steel-ant-input-output/).  
+
 ## License  
 
 Copyright (c) 2015 Fabian "fabiantheblind" Morón Zirfas, University of Applied Sciences Potsdam (Germany)  

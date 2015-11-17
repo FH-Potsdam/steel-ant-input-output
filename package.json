@@ -1,0 +1,36 @@
+{
+  "name": "steel-ant-input-output",
+  "version": "0.1.0",
+  "description": "a unified repo for the seminar Eingabe/Ausgabe @ University of Applied Sciences Potsdam (Germany)",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "./node_modules/.bin/gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FH-Potsdam/steel-ant-input-output.git"
+  },
+  "keywords": [
+    "FH-Potsdam",
+    "P5.js"
+  ],
+  "author": "fabiantheblind",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FH-Potsdam/steel-ant-input-output/issues"
+  },
+  "homepage": "https://github.com/FH-Potsdam/steel-ant-input-output#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-gh-pages": "^0.5.4",
+    "gulp-git": "^1.6.0",
+    "gulp-task-loader": "^1.2.3",
+    "gulp-util": "^3.0.7",
+    "require-dir": "^0.3.0"
+  }
+}

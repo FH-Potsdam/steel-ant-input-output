@@ -9,7 +9,8 @@ function setup(){
   x = random(-5,100);
  // this is executed once
   colorMode(HSL, 360, 100, 100, 100);
-  createCanvas(600,400);
+var canvas = createCanvas(600,400);
+canvas.parent('sketch');
  y = height/2;
 }
 

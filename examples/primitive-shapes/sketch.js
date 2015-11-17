@@ -15,7 +15,8 @@ var w = 0; // values
 function setup() {
   // executed once
   colorMode(HSL, 360, 100, 100, 100);
-  createCanvas(400, 400);
+var canvas = createCanvas(400, 400);
+canvas.parent('sketch');
   background(50);
   h = 20;
   w = 20;

@@ -2,7 +2,8 @@
 // getting started with p5js
 function setup(){
   // executed once
-
+var canvas = createCanvas(100,100);
+canvas.parent('sketch');
   text("just look into\nthe console", 10,10);
 
   if("1" === 1){

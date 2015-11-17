@@ -4,7 +4,8 @@
 
 function setup(){
   // executed once
-  createCanvas(400,400);
+var canvas = createCanvas(400,400);
+canvas.parent('sketch');
   var counter = 0;
   var step = 10;
   var x = step/2;
