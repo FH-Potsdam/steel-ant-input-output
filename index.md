@@ -35,9 +35,12 @@ title: Input Output (Eingabe Ausgabe)
 │   └── [whileloop](examples/whileloop)   
 └── students   
     ├── Logetcrea   
+    │   ├── [logetcrea.github.io/spinaltapdrummers](http://logetcrea.github.io/spinaltapdrummers/)    
     │   └── [Algorithm1](students/Logetcrea/Algorithm1)   
     ├── Ninotschka   
-    ├── [Ourelius](students/Ourelius)   
+    ├── Ourelius   
+    │   └── [Ourelius](students/Ourelius)   
+    │   ├── [ourelius.github.io/data](http://ourelius.github.io/data/)   
     ├── [Q-rec](students/Q-rec)   
     ├── antsteelmule   
     │   ├── [algo digital1](students/antsteelmule/algo-digital1)   
@@ -46,15 +49,22 @@ title: Input Output (Eingabe Ausgabe)
     │   ├── [algo-digital4](students/antsteelmule/algo-digital4)   
     │   └── [algo-digital5](students/antsteelmule/algo-digital5)   
     ├── dariaDunkelbier   
+    │   └── [dariadunkelbier.github.io/Cluedo_Chabos](http://dariadunkelbier.github.io/Cluedo_Chabos/)   
     ├── dziewi   
     │   └── [algorithmus1](students/dziewi/algorithmus1)   
     ├── josues   
     |   ├── [josues](students/josues)    
     │   └── [josues.github.io/MTVfirstday](http://josues.github.io/MTVfirstday/)   
     ├── [lpaubielsa](students/lpaubielsa)   
-    ├── [martakarta](students/martakarta)   
-    ├── [miduku](students/miduku)   
-    ├── [nikoripka](students/nikoripka)   
+    ├── martakarta   
+    |   ├── [martakarta](students/martakarta)    
+    |   └── [martakarta.github.io/Prregnancy/](http://martakarta.github.io/Prregnancy/)    
+    ├── miduku   
+    |   ├── [miduku](students/miduku)    
+    |   └── [miduku.github.io/dataset-london-underground-p5js](http://miduku.github.io/dataset-london-underground-p5js/)    
+    ├── nikoripka   
+    |   ├── [nikoripka](students/nikoripka)    
+    |   └── [nikoripka.github.io/archetypes/](http://nikoripka.github.io/archetypes/)    
     ├── swjo   
     |   ├── [swjo](students/swjo)    
     |   └── [swjo.github.io/Laundry](http://swjo.github.io/Laundry/)    
@@ -64,4 +74,5 @@ title: Input Output (Eingabe Ausgabe)
     |   └── [vogelino.github.io/periodic-table-data-visualization](http://vogelino.github.io/periodic-table-data-visualization/)    
     └── wollemannone   
         ├── [algorithmus_1](students/wollemannone/algorithmus_1)   
+        ├── [wollemannone.github.io/veggieManiacc-](http://wollemannone.github.io/veggieManiacc-/)
         └── [algorithmus_2](students/wollemannone/algorithmus_2)   
