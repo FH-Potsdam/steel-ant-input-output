@@ -235,24 +235,16 @@ function draw(){
       case 4:
       // links 4
       line(startpoint.x, startpoint.y,0, height/2);
-<<<<<<< HEAD
-      saveCanvas('linie','png');
-=======
       if (keyIsPressed=== true){
       saveCanvas('linie','png');}
->>>>>>> origin/master
       noLoop();
       startpoint = {"x":0, "y":height/2,"ndx":null};
 
       break;
       case 36:
       line(startpoint.x, startpoint.y,width/2, 0);
-<<<<<<< HEAD
-      saveCanvas('linie','png');
-=======
       if (keyIsPressed=== true){
       saveCanvas('linie','png');}
->>>>>>> origin/master
       noLoop();
       startpoint = {"x":250, "y":0,"ndx":null};
       //oben 36
@@ -261,12 +253,8 @@ function draw(){
       break;
       case 76:
       line(startpoint.x, startpoint.y,width, height/2);
-<<<<<<< HEAD
-      saveCanvas('linie','png');
-=======
       if (keyIsPressed=== true){
       saveCanvas('linie','png');}
->>>>>>> origin/master
       noLoop();
       startpoint = {"x":width, "y":height/2,"ndx":null};
       // rechts 76
@@ -275,13 +263,9 @@ function draw(){
       break;
       case 44:
       line(startpoint.x, startpoint.y,width/2, height);
-<<<<<<< HEAD
-      saveCanvas('linie','png');
-=======
       if (keyIsPressed=== true){
       saveCanvas('linie','png');}
->>>>>>> origin/master
-      noLoop;
+      noLoop();
       startpoint = {"x":width/2, "y":height,"ndx":null};
       // 44 unten
       break;
