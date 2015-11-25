@@ -24,7 +24,9 @@
     "url": "https://github.com/FH-Potsdam/steel-ant-input-output/issues"
   },
   "homepage": "https://github.com/FH-Potsdam/steel-ant-input-output#readme",
-  "dependencies": {},
+  "dependencies": {
+    "screenlog": "^0.1.0"
+  },
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-gh-pages": "^0.5.4",

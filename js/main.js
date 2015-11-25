@@ -27,5 +27,5 @@ $(document).ready(function() {
   // for(){
 
   // }
-
+  screenLog.init();
 });
