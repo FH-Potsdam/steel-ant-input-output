@@ -74,5 +74,5 @@ title: Input Output (Eingabe Ausgabe)
     |   └── [vogelino.github.io/periodic-table-data-visualization](http://vogelino.github.io/periodic-table-data-visualization/)    
     └── wollemannone   
         ├── [algorithmus_1](students/wollemannone/algorithmus_1)   
-        ├── [wollemannone.github.io/veggieManiacc-](http://wollemannone.github.io/veggieManiacc-/)
+        ├── [wollemannone.github.io/veggieManiacc-](http://wollemannone.github.io/veggieManiacc-/)    
         └── [algorithmus_2](students/wollemannone/algorithmus_2)   
