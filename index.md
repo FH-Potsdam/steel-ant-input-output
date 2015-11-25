@@ -60,7 +60,7 @@ title: Input Output (Eingabe Ausgabe)
     |   └── [swjo.github.io/Laundry](http://swjo.github.io/Laundry/)    
     ├── vogelino   
     |   ├── [molecular-networks-p5-algorithm](https://github.com/vogelino/molecular-networks-p5-algorithm)    
-    |   ├──  [vogelino.github.io/molecular-networks-p5-algorithm](http://vogelino.github.io/molecular-networks-p5-algorithm/)    
+    |   ├── [vogelino.github.io/molecular-networks-p5-algorithm](http://vogelino.github.io/molecular-networks-p5-algorithm/)    
     |   └── [vogelino.github.io/periodic-table-data-visualization](http://vogelino.github.io/periodic-table-data-visualization/)    
     └── wollemannone   
         ├── [algorithmus_1](students/wollemannone/algorithmus_1)   

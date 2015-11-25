@@ -1,0 +1,21 @@
+{
+  "name": "steel-ant-input-output",
+  "version": "0.1.0",
+  "homepage": "https://github.com/FH-Potsdam/steel-ant-input-output",
+  "authors": [
+    "fabiantheblind <moron-zirfas@fh-potsdam.de>"
+  ],
+  "description": "a unified repo for the seminar input/output at University of Applied Sciences Potsdam (Germany",
+  "main": "index.md",
+  "keywords": [
+    "FH-Potsdam"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
