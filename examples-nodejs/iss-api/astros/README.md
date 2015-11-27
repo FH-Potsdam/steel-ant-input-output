@@ -1,5 +1,5 @@
 ---
-layout: node
+layout: default
 title: ISS Astros
 ---
 
@@ -10,8 +10,6 @@ Make a web request to [open-notify.org](http://open-notify.org/) and check who i
 
 Run it like this:
 
-```bash
-cd astros
-npm install
-node index.js
-```
+    cd astros
+    npm install
+    node index.js

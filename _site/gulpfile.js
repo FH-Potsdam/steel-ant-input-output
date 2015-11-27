@@ -12,7 +12,7 @@ gulp.task('test', function() {
 test(gulp);
 });
 
-gulp.task('delete',function(){
+gulp.task('delete', ['gh-pages'],function(){
   // genau
   return gulp.src('./.publish/').pipe(rimraf());
 });
@@ -20,7 +20,7 @@ gulp.task('gh-pages', function(){
    return gulp.src('./**/*').pipe(ghPages());
 });
 
-gulp.task('deploy',['gh-pages', 'delete']);
+gulp.task('deploy',['delete', 'gh-pages']);
 
 
 // gulp.task('deploy', function() {
