@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: node
 title: ISS Astros
 ---
 now

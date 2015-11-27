@@ -1,0 +1,38 @@
+<!doctype html>
+<!-- this is the node template -->
+<html lang="en">
+    <head>
+        <link rel="shortcut icon" href="{{ site.baseurl }}/favicon.ico">
+        <title>{{ page.title }}</title>
+        <meta name="description" content="'Eingabe/Ausgabe' at FH-Potsdam (University of Applied Sciences Potsdam (Germany))">
+        <meta name="author" content="fabiantheblind">
+        <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <style>
+        body{
+        font-family:monospace;
+        font-style: normal;
+        padding-left:2em;
+        white-space: pre-wrap;
+        line-height: 0.9em;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <!--     <h6 class="title"><a href="/">&laquo;&laquo; {{ site.name }}</a></h6>-->
+            <div class="row">
+                <div class="col-md-12">
+                    {{ content }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="source-code"></div>
+            </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+        <script type="text/javascript" src="{{ site.baseurl }}/js/main-node.js"></script>
+    </body>
+</html>
