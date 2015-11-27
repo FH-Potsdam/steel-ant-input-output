@@ -1,0 +1,15 @@
+{
+  "name": "now",
+  "version": "1.0.0",
+  "description": "getting current location of iss",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.10.6",
+    "request": "^2.61.0"
+  }
+}
