@@ -16,8 +16,8 @@ $(document).ready(function() {
   //   }
   // }
   // var parts = src.split('/');
-  $("#source-code").append('<pre><code class="prettyprint" id="target"></code></pre>')
-  $("#target").load('index.js');
+  // $("#source-code").append('<pre><code class="prettyprint" id="target"></code></pre>')
+  // $("#target").load('index.js');
 
 //var styles = $('link');
 //if(styles.length === 0){

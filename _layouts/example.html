@@ -1,16 +1,38 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
-  <title>a title</title>
-  <meta name="description" content="something">
-  <meta name="author" content="me">
-</head>
-
-<body>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
-  <script type="text/javascript" src="sketch.js"></script>
-<div id="sketch"/>
-<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script></body>
+    <head>
+        <link rel="shortcut icon" href="{{ site.baseurl }}/favicon.ico">
+        <title>{{ page.title }}</title>
+        <meta name="description" content="'Eingabe/Ausgabe' at FH-Potsdam (University of Applied Sciences Potsdam (Germany))">
+        <meta name="author" content="fabiantheblind">
+        <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="{{ site.baseurl }}/bower_components/normalize-css/normalize.css">
+        <link rel="stylesheet" href="{{ site.baseurl }}/css/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="{{ site.baseurl }}/css/syntax.css">
+        <link rel="stylesheet" href="{{ site.baseurl }}/css/main.css">
+        <style type="text/stylesheet">
+        </style>
+    </head>
+    <body>
+    <div class="container">
+<!--     <h6 class="title"><a href="/">&laquo;&laquo; {{ site.name }}</a></h6>-->
+    <div class="row">
+      <div class="col-md-12">
+        <div id="sketch"></div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="content">
+        {{ content }}
+        </div>
+    </div>
+    </div>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
+      <script type="text/javascript" src="sketch.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script type="text/javascript" src="{{ site.baseurl }}/js/screenlog.min.js"></script>
+      <script type="text/javascript" src="{{ site.baseurl }}/js/main.js"></script>
+    </body>
 </html>
