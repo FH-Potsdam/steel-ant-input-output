@@ -1,13 +1,14 @@
-{% endhighlight %}
-{% include_relative index.html %}
-{% highlight js %}
-## index.html 
-{% endhighlight %}
-{% include_relative sketch.js %}
-{% highlight js %}
-## sketch.js 
-# geo-data-from-server
+
 ---
-title: geo-data-from-server
 layout: example
+title: geo-data-from-server
 ---
+# geo-data-from-server
+## sketch.js 
+{% highlight js %}
+{% include_relative sketch.js %}
+{% endhighlight %}
+## index.html 
+{% highlight js %}
+{% include_relative index.html %}
+{% endhighlight %}
