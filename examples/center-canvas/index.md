@@ -1,4 +1,3 @@
-
 ---
 layout: example
 title: center-canvas
@@ -10,7 +9,7 @@ title: center-canvas
 {% endhighlight %}
 ## style.css 
 {% highlight js %}
-{% include_relative style.css %}
+{% include_relative styles.css %}
 {% endhighlight %}
 ## index.html 
 {% highlight js %}
