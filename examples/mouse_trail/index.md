@@ -1,13 +1,14 @@
-{% endhighlight %}
-{% include_relative index.html %}
-{% highlight js %}
-## index.html 
-{% endhighlight %}
-{% include_relative sketch.js %}
-{% highlight js %}
-## sketch.js 
-# mouse_trail
+
 ---
-title: mouse_trail
 layout: example
+title: mouse_trail
 ---
+# mouse_trail
+## sketch.js 
+{% highlight js %}
+{% include_relative sketch.js %}
+{% endhighlight %}
+## index.html 
+{% highlight js %}
+{% include_relative index.html %}
+{% endhighlight %}

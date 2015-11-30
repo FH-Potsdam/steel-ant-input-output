@@ -1,9 +1,9 @@
-
 ---
 layout: example
-title: primitive-shapes
+title: sketch 1
 ---
-# primitive-shapes
+
+# 2015-10-28
 ## sketch.js 
 {% highlight js %}
 {% include_relative sketch.js %}

@@ -1,13 +1,14 @@
-{% endhighlight %}
-{% include_relative index.html %}
-{% highlight js %}
-## index.html 
-{% endhighlight %}
-{% include_relative sketch.js %}
-{% highlight js %}
-## sketch.js 
-# load-image
+
 ---
-title: load-image
 layout: example
+title: load-image
 ---
+# load-image
+## sketch.js 
+{% highlight js %}
+{% include_relative sketch.js %}
+{% endhighlight %}
+## index.html 
+{% highlight js %}
+{% include_relative index.html %}
+{% endhighlight %}

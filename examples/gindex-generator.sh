@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-for D in *; do [ -d "${1}" ] addIndex ${1} && done
+# for D in *; do [ -d "${D}" ] && echo "${D}"; done
 
 function addIndex(){
   echo "" > ${1}/index.md
@@ -18,3 +18,5 @@ function addIndex(){
   echo "{% include_relative index.html %}" >> ${1}/index.md
   echo "{% endhighlight %}" >> ${1}/index.md
 }
+
+for D in *; do [ -d "${D}" ] && addIndex ${D}; done
