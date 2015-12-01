@@ -1,9 +1,11 @@
-
 ---
 layout: example
-title: mouse_trails
+title: mouse trails
 ---
-# mouse_trails
+# mouse trails
+
+Draw several trails with the mouse.   
+
 ## sketch.js 
 {% highlight js %}
 {% include_relative sketch.js %}

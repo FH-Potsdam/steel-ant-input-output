@@ -1,9 +1,11 @@
-
 ---
 layout: example
 title: saveFrame
 ---
-# saveFrame
+# saveFrame  
+
+How to save an image?  
+
 ## sketch.js 
 {% highlight js %}
 {% include_relative sketch.js %}

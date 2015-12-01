@@ -1,4 +1,3 @@
-
 ---
 layout: example
 title: empty

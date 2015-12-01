@@ -1,9 +1,11 @@
-
 ---
 layout: example
-title: geo-data-simple
+title: geo data simple
 ---
-# geo-data-simple
+# geo data simple  
+
+Super simple sketch that maps a lattitude longitude location onto a map. Works only with an equirectangular map.  
+
 ## sketch.js 
 {% highlight js %}
 {% include_relative sketch.js %}

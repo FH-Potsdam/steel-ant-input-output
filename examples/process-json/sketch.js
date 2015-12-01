@@ -1,20 +1,3 @@
-// take a look at the data.json next to the inde.html
-//{
-//   "coords": [
-//     {
-//       "x": 10,
-//       "y": 10
-//     },
-//     {
-//       "x": 20,
-//       "y": 10
-//     },
-//     {
-//       "x": 30,
-//       "y": 10
-//     }
-//   ]
-// }
 var data;
 function preload(){
   var url = "data.json";

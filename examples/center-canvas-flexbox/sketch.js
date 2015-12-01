@@ -6,7 +6,7 @@
 var w = 0;
 function setup(){
    var canvas  = createCanvas(400,300);
-   canvas.parent("container");
+   canvas.parent("sketch");
    w= random(width/4,width/2);
   noStroke();
 }
