@@ -9,10 +9,7 @@
 
 var rows = 10;
 var columns = 10;
-
 var mesh  = [];
-
-
 function  setup(){
   var canvas = createCanvas(500,500);
   canvas.parent('sketch');
