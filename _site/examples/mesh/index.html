@@ -9,7 +9,7 @@
         <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        <link rel="stylesheet" href="/steel-ant-input-output/bower_components/normalize-css/normalize.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/normalize.css">
         <link rel="stylesheet" href="/steel-ant-input-output/css/bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="/steel-ant-input-output/css/syntax.css">
         <link rel="stylesheet" href="/steel-ant-input-output/css/main.css">
@@ -43,12 +43,10 @@
 
 <span class="kd">var</span> <span class="nx">rows</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">columns</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-
 <span class="kd">var</span> <span class="nx">mesh</span>  <span class="o">=</span> <span class="p">[];</span>
-
-
 <span class="kd">function</span>  <span class="nx">setup</span><span class="p">(){</span>
-    <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span><span class="mi">500</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span><span class="mi">500</span><span class="p">);</span>
+  <span class="nx">canvas</span><span class="p">.</span><span class="nx">parent</span><span class="p">(</span><span class="s1">&#39;sketch&#39;</span><span class="p">);</span>
   <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">columns</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
     <span class="kd">var</span> <span class="nx">vecs</span> <span class="o">=</span> <span class="p">[];</span>
     <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">rows</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>

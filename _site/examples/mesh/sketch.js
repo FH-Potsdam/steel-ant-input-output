@@ -14,7 +14,8 @@ var mesh  = [];
 
 
 function  setup(){
-    createCanvas(500,500);
+  var canvas = createCanvas(500,500);
+  canvas.parent('sketch');
   for(var i = 0; i < columns+1; i++){
     var vecs = [];
     for (var j = 0; j < rows+1; j++) {
