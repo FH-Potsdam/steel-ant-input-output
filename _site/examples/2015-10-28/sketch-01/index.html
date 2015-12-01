@@ -1,121 +1,18 @@
 <!doctype html>
 <html lang="en">
-<!-- example layout -->
-    <head>
-        <link type="text/stylesheet" rel="shortcut icon" href="/steel-ant-input-output/favicon.ico">
-        <title>sketch 1</title>
-        <meta name="description" content="'Eingabe/Ausgabe' at FH-Potsdam (University of Applied Sciences Potsdam (Germany))">
-        <meta name="author" content="fabiantheblind">
-        <!--[if lt IE 9]>
-        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-        <link type="text/stylesheet" rel="stylesheet" href="/steel-ant-input-output/css/normalize.css">
-        <link type="text/stylesheet" rel="stylesheet" href="/steel-ant-input-output/css/bootstrap/css/bootstrap.css">
-        <link type="text/stylesheet" rel="stylesheet" href="/steel-ant-input-output/css/syntax.css">
-        <link type="text/stylesheet" rel="stylesheet" href="/steel-ant-input-output/css/main.css">
-    </head>
-    <body>
-    <div class="container">
-<!--     <h6 class="title"><a href="/">&laquo;&laquo; Eingabe Ausgabe Steel Ant</a></h6>-->
-    <div class="row">
-      <div class="col-md-12">
-        <div id="sketch"></div>
-      </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12" id="content">
-        <h1>2015-10-28</h1>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-<h2>sketch.js</h2>
+  <title>a title</title>
+  <meta name="description" content="something">
+  <meta name="author" content="me">
+</head>
 
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">weite</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">hoehe</span> <span class="o">=</span> <span class="nx">weite</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">myhue</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<body>
 
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
+  <script type="text/javascript" src="sketch.js"></script>
+<div id="sketch"></div>
 
-<span class="c1">// getting started with p5js</span>
-<span class="kd">function</span> <span class="nx">setup</span><span class="p">(){</span>
- <span class="c1">// this is executed once</span>
-  <span class="nx">colorMode</span><span class="p">(</span><span class="nx">HSL</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span><span class="mi">400</span><span class="p">);</span>
-<span class="nx">canvas</span><span class="p">.</span><span class="nx">parent</span><span class="p">(</span><span class="s1">&#39;sketch&#39;</span><span class="p">);</span>
- <span class="nx">y</span> <span class="o">=</span> <span class="nx">height</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kd">function</span> <span class="nx">draw</span><span class="p">(){</span>
-  <span class="c1">// background(0, 255);</span>
-  <span class="nx">noStroke</span><span class="p">();</span>
-  <span class="c1">// strokeWeight(5);</span>
-  <span class="nx">fill</span><span class="p">(</span><span class="nx">myhue</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">75</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
-  <span class="nx">rect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="nx">width</span><span class="p">,</span><span class="nx">height</span><span class="p">);</span>
-  <span class="nx">myhue</span><span class="o">=</span> <span class="nx">myhue</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-
-<span class="nx">strokeWeight</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-<span class="nx">stroke</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">);</span>
-<span class="nx">line</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nx">height</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nx">width</span><span class="p">,</span><span class="nx">height</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
-<span class="nx">strokeWeight</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
-
-<span class="nx">point</span><span class="p">(</span><span class="nx">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nx">height</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
-<span class="nx">noStroke</span><span class="p">();</span>
-
-  <span class="k">if</span><span class="p">(</span><span class="nx">myhue</span><span class="o">&gt;</span> <span class="mi">360</span><span class="p">){</span>
-    <span class="nx">myhue</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="c1">// fill(255); // greyscale</span>
-  <span class="c1">// fill(255, 100); //greyscale , alpha</span>
-  <span class="c1">// fill(0,255,0); // rgb</span>
-  <span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span> <span class="c1">// rgba</span>
-  <span class="nx">ellipse</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span> <span class="nx">weite</span><span class="p">,</span> <span class="nx">hoehe</span><span class="p">);</span>
-
-<span class="c1">// this is executed all the time</span>
-  <span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span> <span class="o">+</span> <span class="mi">5</span><span class="p">;</span>
- <span class="nx">y</span> <span class="o">=</span>  <span class="p">(</span><span class="nx">height</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nx">random</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
-
- <span class="k">if</span><span class="p">(</span><span class="nx">x</span> <span class="o">&gt;</span> <span class="nx">width</span><span class="p">){</span>
-   <span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
- <span class="p">}</span>
-<span class="c1">// console.log(x);</span>
-<span class="p">}</span></code></pre></div>
-
-<h2>index.html</h2>
-
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="o">&lt;!</span><span class="nx">doctype</span> <span class="nx">html</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">html</span> <span class="nx">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">&quot;Content-Type&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;text/html; charset=utf-8&quot;</span><span class="o">&gt;</span>
-
-  <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">a</span> <span class="nx">title</span><span class="o">&lt;</span><span class="err">/title&gt;</span>
-  <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;description&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;something&quot;</span><span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;author&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;me&quot;</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="err">/head&gt;</span>
-
-<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
-
-  <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
-  <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;sketch.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
-<span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;sketch&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
-
-<span class="o">&lt;</span><span class="err">/body&gt;</span>
-<span class="o">&lt;</span><span class="err">/html&gt;</span></code></pre></div>
-
-        </div>
-    </div>
-      <footer>
-
-        <p>To use this code you need to:</p>
-        <ol>
-          <li>create the files (e.g. sketch.js, index.html styles.css, data.json …)</li>
-          <li>start a local server. We suggest <a href="https://www.npmjs.com/package/reload">reload</a></li>
-          <li>direct your browser to <a href="http://localhoast:8080">http://localhoast:8080</a></li>
-        </ol>
-      </footer>
-    </div>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
-      <script type="text/javascript" src="sketch.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-      <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
-      <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
-    </body>
+</body>
 </html>
