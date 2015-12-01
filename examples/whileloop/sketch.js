@@ -1,7 +1,5 @@
-
 // getting started with p5js
-// this is a example for the shile loop
-
+// this is a example for the while loop
 function setup(){
   // executed once
 var canvas = createCanvas(400,400);
@@ -20,9 +18,6 @@ canvas.parent('sketch');
     counter++;
   }
 }
-
-
 function draw(){
   // executed all the time
-
 }

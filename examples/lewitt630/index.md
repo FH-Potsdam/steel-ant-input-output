@@ -1,9 +1,11 @@
-
 ---
 layout: example
-title: lewitt630
+title: lewitt 630
 ---
-# lewitt630
+# lewitt 630  
+
+Sol LeWitt wall drawings in code.  
+
 ## sketch.js 
 {% highlight js %}
 {% include_relative sketch.js %}

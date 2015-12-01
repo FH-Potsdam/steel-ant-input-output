@@ -1,9 +1,11 @@
-
 ---
 layout: example
-title: forloops
+title: for loops
 ---
-# forloops
+# for loops
+
+Filling the canas with two for loops. Creating an array of circles.  
+
 ## sketch.js 
 {% highlight js %}
 {% include_relative sketch.js %}

@@ -1,9 +1,11 @@
-
 ---
 layout: example
 title: typesafe
 ---
-# typesafe
+# typesafe  
+
+Typesafe comparison `===` vs `==`  
+
 ## sketch.js 
 {% highlight js %}
 {% include_relative sketch.js %}

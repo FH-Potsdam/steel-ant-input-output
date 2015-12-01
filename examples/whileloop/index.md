@@ -1,9 +1,10 @@
-
 ---
 layout: example
-title: whileloop
+title: while loop
 ---
-# whileloop
+# while loop
+
+The while loop. Better if working with conditions.  
 ## sketch.js 
 {% highlight js %}
 {% include_relative sketch.js %}
