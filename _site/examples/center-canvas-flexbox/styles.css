@@ -1,5 +1,5 @@
 /*shows how to center the canvas in its container using flexbox*/
-#container{
+#sketch{
   display: flex;
   justify-content:center;
   align-items:center;

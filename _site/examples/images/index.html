@@ -1,42 +1,52 @@
 <!doctype html>
 <html lang="en">
+<!-- example layout -->
     <head>
         <link rel="shortcut icon" href="/steel-ant-input-output/favicon.ico">
-        <title>Images Input Output (Eingabe Ausgabe)</title>
+        <title>images</title>
         <meta name="description" content="'Eingabe/Ausgabe' at FH-Potsdam (University of Applied Sciences Potsdam (Germany))">
         <meta name="author" content="fabiantheblind">
         <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        <style>
-        body{
-            font-family:monospace;
-            font-style: normal;
-            padding:2em;
-            white-space: pre-wrap;
-            line-height: 0.9em;
-        }
+        <link rel="stylesheet" href="/steel-ant-input-output/bower_components/normalize-css/normalize.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/syntax.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/main.css">
+        <style type="text/stylesheet">
         </style>
     </head>
     <body>
     <div class="container">
 <!--     <h6 class="title"><a href="/">&laquo;&laquo; Eingabe Ausgabe Steel Ant</a></h6>-->
     <div class="row">
-        <div class="col-md-12">
-        <p>├── <a href="circles.png">circles.png</a><br>
-├── <a href="neighbours.gif">neighbours.gif</a><br>
-├── <a href="new-file-step-1.png">new-file-step-1.png</a><br>
-├── <a href="new-file-step-2.png">new-file-step-2.png</a><br>
-├── <a href="new-file-step-3.png">new-file-step-3.png</a><br>
-├── <a href="new-file-step-4.png">new-file-step-4.png</a><br>
-├── <a href="pending-invites-2.png">pending-invites-2.png</a><br>
-├── <a href="q-rec-algo-01.png">q-rec-algo-01.png</a><br>
-└── <a href="thumbs-up.png">thumbs-up.png</a>    </p>
+      <div class="col-md-12">
+        <div id="sketch"></div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="content">
+        <h1>images</h1>
 
-<p>0 directories, 10 files</p>
+<p>Some images </p>
+
+<p><img src="circles.png" alt=""><br>
+<img src="neighbours.gif" alt=""><br>
+<img src="new-file-step-1.png" alt=""><br>
+<img src="new-file-step-2.png" alt=""><br>
+<img src="new-file-step-3.png" alt=""><br>
+<img src="new-file-step-4.png" alt=""><br>
+<img src="pending-invites-2.png" alt=""><br>
+<img src="q-rec-algo-01.png" alt=""><br>
+<img src="thumbs-up.png" alt="">  </p>
 
         </div>
     </div>
     </div>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
+      <script type="text/javascript" src="sketch.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
     </body>
 </html>

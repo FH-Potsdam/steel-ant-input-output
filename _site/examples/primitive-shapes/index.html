@@ -1,20 +1,122 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>a title</title>
-  <meta name="description" content="something">
-  <meta name="author" content="me">
-</head>
+<!-- example layout -->
+    <head>
+        <link rel="shortcut icon" href="/steel-ant-input-output/favicon.ico">
+        <title>primitive shapes</title>
+        <meta name="description" content="'Eingabe/Ausgabe' at FH-Potsdam (University of Applied Sciences Potsdam (Germany))">
+        <meta name="author" content="fabiantheblind">
+        <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="/steel-ant-input-output/bower_components/normalize-css/normalize.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/syntax.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/main.css">
+        <style type="text/stylesheet">
+        </style>
+    </head>
+    <body>
+    <div class="container">
+<!--     <h6 class="title"><a href="/">&laquo;&laquo; Eingabe Ausgabe Steel Ant</a></h6>-->
+    <div class="row">
+      <div class="col-md-12">
+        <div id="sketch"></div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="content">
+        <h1>primitive shapes</h1>
 
-<body>
+<p>Some primitive shapes. </p>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
-  <script type="text/javascript" src="sketch.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
-  <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
-<div id="sketch"/>
-<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-</body>
+<h2>sketch.js</h2>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// values</span>
+<span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// values</span>
+<span class="kd">var</span> <span class="nx">x1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// values</span>
+<span class="kd">var</span> <span class="nx">y1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// values</span>
+<span class="kd">var</span> <span class="nx">x2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// values</span>
+<span class="kd">var</span> <span class="nx">y2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// values</span>
+<span class="kd">var</span> <span class="nx">x3</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// values</span>
+<span class="kd">var</span> <span class="nx">y3</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// values</span>
+<span class="kd">var</span> <span class="nx">x4</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// values</span>
+<span class="kd">var</span> <span class="nx">y4</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// values</span>
+<span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// values</span>
+<span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// values</span>
+
+<span class="c1">// getting started with p5js</span>
+<span class="kd">function</span> <span class="nx">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// executed once</span>
+  <span class="nx">colorMode</span><span class="p">(</span><span class="nx">HSL</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">400</span><span class="p">);</span>
+<span class="nx">canvas</span><span class="p">.</span><span class="nx">parent</span><span class="p">(</span><span class="s1">&#39;sketch&#39;</span><span class="p">);</span>
+  <span class="nx">background</span><span class="p">(</span><span class="mi">50</span><span class="p">);</span>
+  <span class="nx">h</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+  <span class="nx">w</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+  <span class="nx">x</span> <span class="o">+=</span> <span class="nx">w</span><span class="p">;</span>
+  <span class="nx">y</span> <span class="o">+=</span> <span class="nx">h</span><span class="p">;</span>
+  <span class="nx">x1</span> <span class="o">=</span> <span class="nx">x2</span> <span class="o">=</span> <span class="nx">x3</span> <span class="o">=</span> <span class="nx">x4</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
+  <span class="nx">y1</span> <span class="o">=</span> <span class="nx">y2</span> <span class="o">=</span> <span class="nx">y3</span> <span class="o">=</span> <span class="nx">y4</span> <span class="o">=</span> <span class="nx">y</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kd">function</span> <span class="nx">draw</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// executed all the time</span>
+  <span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="nx">stroke</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+  <span class="nx">strokeWeight</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="c1">// the following primitives are affected by</span>
+  <span class="c1">// stroke and fill</span>
+  <span class="nx">ellipse</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">w</span><span class="p">,</span> <span class="nx">h</span><span class="p">);</span>
+
+  <span class="nx">rect</span><span class="p">(</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">w</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">w</span><span class="p">,</span> <span class="nx">h</span><span class="p">);</span>
+
+  <span class="nx">triangle</span><span class="p">(</span><span class="nx">x1</span> <span class="o">+</span> <span class="nx">w</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="nx">y1</span><span class="p">,</span> <span class="nx">x2</span> <span class="o">+</span> <span class="nx">w</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="nx">y2</span> <span class="o">+</span> <span class="nx">h</span><span class="p">,</span> <span class="nx">x3</span> <span class="o">+</span> <span class="nx">w</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">y3</span> <span class="o">+</span> <span class="nx">h</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+
+  <span class="nx">quad</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span> <span class="c1">// getting tired of that calc</span>
+
+  <span class="nx">arc</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="nx">h</span><span class="p">,</span> <span class="nx">h</span><span class="p">,</span> <span class="nx">radians</span><span class="p">(</span><span class="mi">90</span><span class="p">),</span> <span class="nx">radians</span><span class="p">(</span><span class="mi">350</span><span class="p">),</span> <span class="nx">PIE</span><span class="p">);</span>
+  <span class="c1">// these are only affected by stroke</span>
+  <span class="nx">strokeWeight</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+  <span class="nx">line</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="nx">width</span> <span class="o">-</span> <span class="nx">w</span><span class="p">,</span> <span class="mi">320</span><span class="p">);</span>
+
+  <span class="nx">point</span><span class="p">(</span><span class="nx">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">height</span> <span class="o">/</span> <span class="mi">4</span><span class="p">);</span>
+
+  <span class="c1">// there is another one that is pretty useful</span>
+  <span class="c1">// the vertex!</span>
+  <span class="nx">beginShape</span><span class="p">();</span>
+  <span class="nx">vertex</span><span class="p">(</span><span class="mi">350</span><span class="p">,</span><span class="nx">height</span><span class="o">-</span><span class="mi">50</span><span class="p">);</span>
+  <span class="nx">vertex</span><span class="p">(</span><span class="mi">350</span><span class="p">,</span><span class="nx">height</span><span class="o">-</span><span class="mi">100</span><span class="p">);</span>
+  <span class="nx">vertex</span><span class="p">(</span><span class="mi">280</span><span class="p">,</span><span class="nx">height</span><span class="o">-</span><span class="mi">75</span><span class="p">);</span>
+  <span class="nx">endShape</span><span class="p">(</span><span class="nx">CLOSE</span><span class="p">);</span>
+  <span class="nx">noLoop</span><span class="p">();</span>
+<span class="p">}</span></code></pre></div>
+
+<h2>index.html</h2>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="o">&lt;!</span><span class="nx">doctype</span> <span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span> <span class="nx">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">&quot;Content-Type&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;text/html; charset=utf-8&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">a</span> <span class="nx">title</span><span class="o">&lt;</span><span class="err">/title&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;description&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;something&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;author&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;me&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="err">/head&gt;</span>
+  <span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;sketch.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;sketch&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
+  <span class="o">&lt;</span><span class="err">/body&gt;</span>
+<span class="o">&lt;</span><span class="err">/html&gt;</span></code></pre></div>
+
+        </div>
+    </div>
+    </div>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
+      <script type="text/javascript" src="sketch.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
+    </body>
 </html>

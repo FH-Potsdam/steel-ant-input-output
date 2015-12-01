@@ -18,8 +18,6 @@ console.log("The minute is %s", minute);
 // Javascript Date Object
 }
 
-
 function draw(){
   // executed all the time
-
 }

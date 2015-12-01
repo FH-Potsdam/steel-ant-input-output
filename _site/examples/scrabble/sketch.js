@@ -1,6 +1,6 @@
 var scrabble;
 function preload(){
-scrabble = loadJSON("scrabble-2.json");
+scrabble = loadJSON("scrabble.json");
 // NEVER LOG IN PRELOAD TO THE CONSOLE !!!!!!!!!!!
 }
 // getting started with p5js
@@ -9,8 +9,6 @@ function setup(){
   var canvas = createCanvas(300,100);
   canvas.parent('sketch');
   // text("empty example", 10,10);
-
-
   // console.log(scrabble);
   // executed once
   var letters = scrabble.letters;
@@ -39,12 +37,6 @@ for(var i = 0; i < values.length; i++){
   x+=step;
   }
 }
-
-
 function draw(){
   // executed all the time
 }
-
-// function callback (){
-
-// }

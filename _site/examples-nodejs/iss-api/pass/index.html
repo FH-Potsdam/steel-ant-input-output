@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+<!-- default layout -->
     <head>
         <link rel="shortcut icon" href="/steel-ant-input-output/favicon.ico">
         <title>ISS Astros</title>
@@ -8,30 +9,59 @@
         <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        <style>
-        body{
-            font-family:monospace;
-            font-style: normal;
-            padding:2em;
-            white-space: pre-wrap;
-            line-height: 0.9em;
-        }
+        <link rel="stylesheet" href="/steel-ant-input-output/bower_components/normalize-css/normalize.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/syntax.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/main.css">
+        <style type="text/stylesheet">
         </style>
     </head>
     <body>
     <div class="container">
 <!--     <h6 class="title"><a href="/">&laquo;&laquo; Eingabe Ausgabe Steel Ant</a></h6>-->
     <div class="row">
-        <div class="col-md-12">
-        <h1>now</h1>
+        <div class="col-md-12" id="content">
+        <h1>pass</h1>
 
 <p>Make a web request to <a href="http://open-notify.org/">open-notify.org</a> and check when the iss will be over a given location.  </p>
 
 <p>Run it like this:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd pass
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd </span>path/to/steel-ant-input-output/examples-nodejs/iss-api/pass
 npm install
-node index.js
-</code></pre></div>
+node index.js</code></pre></div>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="cm">/**</span>
+<span class="cm"> * call the pass api of the iss</span>
+<span class="cm"> * and display the dates it will be over us</span>
+<span class="cm"> * 52.41366 13.04994 is here at the FHP</span>
+<span class="cm"> */</span>
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">moment</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;moment&#39;</span><span class="p">);</span>
+<span class="c1">// lets build the string we need</span>
+<span class="kd">var</span> <span class="nx">lat</span> <span class="o">=</span> <span class="s2">&quot;lat=52.41366&quot;</span><span class="p">;</span> <span class="c1">// latitude</span>
+<span class="kd">var</span> <span class="nx">lon</span> <span class="o">=</span> <span class="s2">&quot;lon=13.04994&quot;</span><span class="p">;</span> <span class="c1">// longitude</span>
+<span class="kd">var</span> <span class="nx">alt</span> <span class="o">=</span> <span class="s2">&quot;alt=35&quot;</span><span class="p">;</span> <span class="c1">// we are 35 meters over NN</span>
+<span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="s2">&quot;n=10&quot;</span><span class="p">;</span> <span class="c1">// just want the next 10 passes</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;http://api.open-notify.org/iss-pass.json&quot;</span><span class="p">;</span>
+<span class="c1">// now lets build the URL for the request</span>
+<span class="kd">var</span> <span class="nx">req</span> <span class="o">=</span> <span class="nx">url</span> <span class="o">+</span> <span class="s2">&quot;?&quot;</span> <span class="o">+</span> <span class="nx">lat</span> <span class="o">+</span> <span class="s2">&quot;&amp;&quot;</span> <span class="o">+</span> <span class="nx">lon</span> <span class="o">+</span> <span class="s2">&quot;&amp;&quot;</span> <span class="o">+</span> <span class="nx">alt</span> <span class="o">+</span> <span class="s2">&quot;&amp;&quot;</span> <span class="o">+</span> <span class="nx">n</span><span class="p">;</span>
+<span class="c1">// make the web request</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// error check</span>
+    <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span><span class="c1">// parse the result to a JSON object</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;The ISS will be over the FHP at lat/lon 52.41366 13.04994 at the following dates:&quot;</span><span class="p">);</span>
+    <span class="c1">// log to the console</span>
+    <span class="c1">// transform unix timestamps to readable form</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">.</span><span class="nx">unix</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">response</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">risetime</span><span class="p">);</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">toISOString</span><span class="p">());</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></div>
+
         </div>
     </div>
     </div>

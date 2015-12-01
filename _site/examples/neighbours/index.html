@@ -1,36 +1,262 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>a title</title>
-  <meta name="description" content="something">
-  <meta name="author" content="me">
-</head>
-
-<body>
-
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
-  <script type="text/javascript" src="sketch.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
-  <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
-<div id="sketch"/>
-<p>Algorithm for finding the neighbours in a 1D list. See also <a href="https://github.com/fabiantheblind/neighbours"></a>
-</p>
-
-<pre>
-<code class="prettyprint">
-    +---+---+---+
+<!-- example layout -->
+    <head>
+        <link rel="shortcut icon" href="/steel-ant-input-output/favicon.ico">
+        <title>neighbours</title>
+        <meta name="description" content="'Eingabe/Ausgabe' at FH-Potsdam (University of Applied Sciences Potsdam (Germany))">
+        <meta name="author" content="fabiantheblind">
+        <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="/steel-ant-input-output/bower_components/normalize-css/normalize.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/syntax.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/main.css">
+        <style type="text/stylesheet">
+        </style>
+    </head>
+    <body>
+    <div class="container">
+<!--     <h6 class="title"><a href="/">&laquo;&laquo; Eingabe Ausgabe Steel Ant</a></h6>-->
+    <div class="row">
+      <div class="col-md-12">
+        <div id="sketch"></div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="content">
+        <h1>neighbours</h1>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    +---+---+---+
     | 0 | 3 | 6 |
     +---+---+---+
     | 1 | 4 | 7 |
     +---+---+---+
     | 2 | 5 | 8 |
     +---+---+---+
-    </code>
-</pre>
+</code></pre></div>
+<p>This code calculates the neighbours for a cell in an 1 dimensional array.  </p>
+
+<h2>sketch.js</h2>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// getting started with p5js</span>
+
+<span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">step</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">points</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="kd">var</span> <span class="nx">startpoint</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">nextpoint</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 
 
-<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-</body>
+
+
+<span class="kd">var</span> <span class="nx">get_neighbours</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ndx</span><span class="p">,</span> <span class="nx">list</span><span class="p">,</span> <span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">,</span> <span class="nx">steps</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">w_steps</span> <span class="o">=</span> <span class="p">(</span><span class="nx">width</span> <span class="o">/</span> <span class="nx">steps</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">h_steps</span> <span class="o">=</span> <span class="p">(</span><span class="nx">height</span> <span class="o">/</span> <span class="nx">steps</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">curr_point</span> <span class="o">=</span> <span class="nx">list</span><span class="p">[</span><span class="nx">ndx</span><span class="p">];</span>
+  <span class="kd">var</span> <span class="nx">neighbours</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="kd">var</span> <span class="nx">left</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">right</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">top</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">bottom</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">centered</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="c1">// for(var i = 0; i &lt; list.length;i++){</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">ndx</span> <span class="o">&lt;</span> <span class="nx">h_steps</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// we are at the left border</span>
+    <span class="c1">//console.log(&#39;Left border with index &quot;%s&quot; point is at x: %s y: %s &#39;, ndx, list[ndx].x, list[ndx].y);</span>
+    <span class="nx">left</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">ndx</span> <span class="o">&gt;</span> <span class="p">(</span><span class="nx">list</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="nx">h_steps</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// right border</span>
+    <span class="c1">//console.log(&#39;Right border with index &quot;%s&quot; point is at x: %s y: %s &#39;, ndx, list[ndx].x, list[ndx].y);</span>
+    <span class="nx">right</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">ndx</span> <span class="o">%</span> <span class="p">(</span><span class="nx">h_steps</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// upper border</span>
+    <span class="c1">//console.log(&#39;Upper border with index &quot;%s&quot; point is at x: %s y: %s &#39;, ndx, list[ndx].x, list[ndx].y);</span>
+    <span class="nx">top</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">ndx</span> <span class="o">%</span> <span class="p">(</span><span class="nx">h_steps</span><span class="p">)</span> <span class="o">===</span> <span class="nx">h_steps</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// lower border</span>
+    <span class="c1">//console.log(&#39;Lower border with index &quot;%s&quot; point is at x: %s y: %s &#39;, ndx, list[ndx].x, list[ndx].y);</span>
+    <span class="nx">bottom</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">right</span> <span class="o">!==</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="nx">left</span> <span class="o">!==</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="nx">top</span> <span class="o">!==</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="nx">bottom</span> <span class="o">!==</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//console.log(&#39;centered with index &quot;%s&quot; point is at x: %s y: %s &#39;, ndx, list[ndx].x, list[ndx].y);</span>
+    <span class="nx">centered</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">right</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="nx">bottom</span> <span class="o">===</span> <span class="kc">false</span> <span class="o">&amp;&amp;</span> <span class="nx">top</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">neighbours</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="nx">h_steps</span><span class="p">);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">right</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="nx">top</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="nx">bottom</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">neighbours</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="c1">// neighbours.push(ndx - (h_steps + 1));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="nx">h_steps</span><span class="p">);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="c1">// neighbours.push(ndx - 1);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">right</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="nx">bottom</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="nx">top</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">neighbours</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="nx">h_steps</span><span class="p">);</span>
+    <span class="c1">// neighbours.push(ndx - (h_steps - 1));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="c1">// neighbours.push(ndx + 1);</span>
+
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">left</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="nx">bottom</span> <span class="o">===</span> <span class="kc">false</span> <span class="o">&amp;&amp;</span> <span class="nx">top</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">neighbours</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="nx">h_steps</span><span class="p">);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">left</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="nx">top</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="nx">bottom</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">neighbours</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="nx">h_steps</span><span class="p">);</span>
+    <span class="c1">// neighbours.push(ndx + (h_steps - 1));</span>
+    <span class="c1">// neighbours.push(ndx - 1);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="c1">// neighbours.push(ndx - (h_steps + 1));</span>
+    <span class="c1">// neighbours.push(ndx - h_steps);</span>
+    <span class="c1">// neighbours.push(ndx - (h_steps - 1));</span>
+
+
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">left</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="nx">bottom</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="nx">top</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">neighbours</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="c1">// neighbours.push(ndx + (h_steps + 1));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="nx">h_steps</span><span class="p">);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="c1">// neighbours.push(ndx + 1);</span>
+    <span class="c1">// neighbours.push(ndx - (h_steps + 1));</span>
+    <span class="c1">// neighbours.push(ndx - h_steps);</span>
+    <span class="c1">// neighbours.push(ndx - (h_steps - 1));</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">top</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="nx">left</span> <span class="o">===</span> <span class="kc">false</span> <span class="o">&amp;&amp;</span> <span class="nx">right</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">neighbours</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="nx">h_steps</span><span class="p">);</span>
+    <span class="c1">// neighbours.push(ndx + (h_steps - 1));</span>
+    <span class="c1">// neighbours.push(ndx - 1);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="c1">// neighbours.push(ndx - (h_steps + 1));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="nx">h_steps</span><span class="p">);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">bottom</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="nx">left</span> <span class="o">===</span> <span class="kc">false</span> <span class="o">&amp;&amp;</span> <span class="nx">right</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">neighbours</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="c1">// neighbours.push(ndx + (h_steps + 1));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="nx">h_steps</span><span class="p">);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="c1">// neighbours.push(ndx + 1);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="nx">h_steps</span><span class="p">);</span>
+    <span class="c1">// neighbours.push(ndx - (h_steps - 1));</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">centered</span> <span class="o">===</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">neighbours</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="nx">h_steps</span><span class="p">);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="nx">h_steps</span><span class="p">);</span>
+    <span class="nx">neighbours</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ndx</span> <span class="o">-</span> <span class="p">(</span><span class="nx">h_steps</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+  <span class="p">}</span>
+
+<span class="k">return</span> <span class="nx">neighbours</span><span class="p">;</span>
+<span class="p">};</span>
+
+
+<span class="kd">function</span> <span class="nx">setup</span><span class="p">(){</span>
+<span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nx">createCanvas</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="nx">h</span><span class="p">);</span>
+<span class="nx">canvas</span><span class="p">.</span><span class="nx">parent</span><span class="p">(</span><span class="s1">&#39;sketch&#39;</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">step</span><span class="p">;</span> <span class="nx">x</span> <span class="o">&lt;</span> <span class="nx">w</span><span class="p">;</span> <span class="nx">x</span> <span class="o">+=</span> <span class="nx">step</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">step</span><span class="p">;</span> <span class="nx">y</span> <span class="o">&lt;</span> <span class="nx">h</span><span class="p">;</span> <span class="nx">y</span> <span class="o">+=</span> <span class="nx">step</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">points</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+        <span class="s2">&quot;x&quot;</span><span class="o">:</span> <span class="nx">x</span><span class="p">,</span>
+        <span class="s2">&quot;y&quot;</span><span class="o">:</span> <span class="nx">y</span><span class="p">,</span>
+        <span class="s2">&quot;ndx&quot;</span><span class="o">:</span> <span class="nx">counter</span>
+      <span class="p">});</span>
+      <span class="nx">counter</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+   <span class="nx">startpoint</span> <span class="o">=</span> <span class="nx">points</span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="nx">points</span><span class="p">.</span><span class="nx">length</span><span class="p">)];</span>
+
+<span class="p">}</span>
+<span class="c1">// http://stackoverflow.com/questions/10073699/pad-a-number-with-leading-zeros-in-javascript</span>
+<span class="kd">function</span> <span class="nx">pad</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">width</span><span class="p">,</span> <span class="nx">z</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">z</span> <span class="o">=</span> <span class="nx">z</span> <span class="o">||</span> <span class="s1">&#39;0&#39;</span><span class="p">;</span>
+  <span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">n</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;=</span> <span class="nx">width</span> <span class="o">?</span> <span class="nx">n</span> <span class="o">:</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">width</span> <span class="o">-</span> <span class="nx">n</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">).</span><span class="nx">join</span><span class="p">(</span><span class="nx">z</span><span class="p">)</span> <span class="o">+</span> <span class="nx">n</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">draw</span><span class="p">(){</span>
+  <span class="kd">var</span> <span class="nx">nearest_neighbours</span> <span class="o">=</span> <span class="nx">get_neighbours</span><span class="p">(</span><span class="nx">startpoint</span><span class="p">.</span><span class="nx">ndx</span><span class="p">,</span> <span class="nx">points</span><span class="p">,</span> <span class="nx">w</span><span class="p">,</span> <span class="nx">h</span><span class="p">,</span> <span class="nx">step</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">nextindex</span> <span class="o">=</span>  <span class="nx">nearest_neighbours</span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="nx">nearest_neighbours</span><span class="p">.</span><span class="nx">length</span><span class="p">)];</span>
+  <span class="nx">nextpoint</span> <span class="o">=</span> <span class="nx">points</span><span class="p">[</span><span class="nx">nextindex</span><span class="p">];</span>
+  <span class="nx">line</span><span class="p">(</span><span class="nx">startpoint</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">startpoint</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span> <span class="nx">nextpoint</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">nextpoint</span><span class="p">.</span><span class="nx">y</span> <span class="p">);</span>
+  <span class="nx">startpoint</span> <span class="o">=</span> <span class="nx">nextpoint</span><span class="p">;</span>
+ <span class="c1">// saveCanvas(&quot;seq-&quot;+pad(frameCount, 5),&quot;png&quot;);</span>
+ <span class="c1">// if(frameCount &gt;= 1000){</span>
+ <span class="c1">//  noLoop();</span>
+
+ <span class="c1">// }</span>
+<span class="p">}</span></code></pre></div>
+
+<h2>index.html</h2>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="o">&lt;!</span><span class="nx">doctype</span> <span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span> <span class="nx">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">&quot;Content-Type&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;text/html; charset=utf-8&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">a</span> <span class="nx">title</span><span class="o">&lt;</span><span class="err">/title&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;description&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;something&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;author&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;me&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="err">/head&gt;</span>
+  <span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;sketch.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;sketch&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
+    <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">Algorithm</span> <span class="k">for</span> <span class="nx">finding</span> <span class="nx">the</span> <span class="nx">neighbours</span> <span class="k">in</span> <span class="nx">a</span> <span class="mi">1</span><span class="nx">D</span> <span class="nx">list</span><span class="p">.</span> <span class="nx">See</span> <span class="nx">also</span> <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://github.com/fabiantheblind/neighbours&quot;</span><span class="o">&gt;&lt;</span><span class="err">/a&gt;</span>
+  <span class="o">&lt;</span><span class="err">/p&gt;</span>
+  <span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">code</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;prettyprint&quot;</span><span class="o">&gt;</span>
+        <span class="o">+---+---+---+</span>
+        <span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="mi">3</span> <span class="o">|</span> <span class="mi">6</span> <span class="o">|</span>
+        <span class="o">+---+---+---+</span>
+        <span class="o">|</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">4</span> <span class="o">|</span> <span class="mi">7</span> <span class="o">|</span>
+        <span class="o">+---+---+---+</span>
+        <span class="o">|</span> <span class="mi">2</span> <span class="o">|</span> <span class="mi">5</span> <span class="o">|</span> <span class="mi">8</span> <span class="o">|</span>
+        <span class="o">+---+---+---+</span>
+        <span class="o">&lt;</span><span class="err">/code&gt;</span>
+  <span class="o">&lt;</span><span class="err">/pre&gt;</span>
+<span class="o">&lt;</span><span class="err">/body&gt;</span>
+<span class="o">&lt;</span><span class="err">/html&gt;</span></code></pre></div>
+
+        </div>
+    </div>
+    </div>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
+      <script type="text/javascript" src="sketch.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
+    </body>
 </html>

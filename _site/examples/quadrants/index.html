@@ -1,20 +1,94 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>quadrant</title>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
-    <script src="sketch.js" type="text/javascript"></script>
+<html lang="en">
+<!-- example layout -->
+    <head>
+        <link rel="shortcut icon" href="/steel-ant-input-output/favicon.ico">
+        <title>quadrants</title>
+        <meta name="description" content="'Eingabe/Ausgabe' at FH-Potsdam (University of Applied Sciences Potsdam (Germany))">
+        <meta name="author" content="fabiantheblind">
+        <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="/steel-ant-input-output/bower_components/normalize-css/normalize.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/syntax.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/main.css">
+        <style type="text/stylesheet">
+        </style>
+    </head>
+    <body>
+    <div class="container">
+<!--     <h6 class="title"><a href="/">&laquo;&laquo; Eingabe Ausgabe Steel Ant</a></h6>-->
+    <div class="row">
+      <div class="col-md-12">
+        <div id="sketch"></div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="content">
+        <h1>quadrants</h1>
 
-     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
-  <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
+<p>Devides the whole canvas in some quadrants and draws then a point per quadrant.  </p>
 
-  </head>
+<h2>sketch.js</h2>
 
-<body>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// creating quadrants in a grid</span>
+<span class="c1">// and placing a point inside</span>
 
-  <div id="sketch"/>
-<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-</body>
+<span class="kd">var</span> <span class="nx">quadrants</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="kd">var</span> <span class="nx">step</span> <span class="o">=</span> <span class="mi">25</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">400</span><span class="p">);</span>
+  <span class="nx">canvas</span><span class="p">.</span><span class="nx">parent</span><span class="p">(</span><span class="s1">&#39;sketch&#39;</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">x</span> <span class="o">&lt;</span> <span class="nx">width</span><span class="p">;</span> <span class="nx">x</span> <span class="o">+=</span> <span class="nx">step</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">y</span> <span class="o">&lt;</span> <span class="nx">height</span><span class="p">;</span> <span class="nx">y</span> <span class="o">+=</span> <span class="nx">step</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">rect</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">step</span><span class="p">,</span> <span class="nx">step</span><span class="p">);</span>
+      <span class="kd">var</span> <span class="nx">quadrant</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;x1&quot;</span><span class="o">:</span> <span class="nx">x</span><span class="p">,</span>
+        <span class="s2">&quot;y1&quot;</span><span class="o">:</span> <span class="nx">y</span><span class="p">,</span>
+        <span class="s2">&quot;x2&quot;</span><span class="o">:</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">step</span><span class="p">,</span>
+        <span class="s2">&quot;y2&quot;</span><span class="o">:</span> <span class="nx">y</span> <span class="o">+</span> <span class="nx">step</span>
+      <span class="p">};</span>
+      <span class="nx">quadrants</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">quadrant</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">quadrants</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">quad</span> <span class="o">=</span> <span class="nx">quadrants</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+    <span class="kd">var</span> <span class="nx">upperleft_x</span> <span class="o">=</span> <span class="nx">quad</span><span class="p">.</span><span class="nx">x1</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">upperleft_y</span> <span class="o">=</span> <span class="nx">quad</span><span class="p">.</span><span class="nx">y1</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">lowerright_x</span> <span class="o">=</span> <span class="nx">quad</span><span class="p">.</span><span class="nx">x2</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">lowerright_y</span> <span class="o">=</span> <span class="nx">quad</span><span class="p">.</span><span class="nx">y2</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">px</span> <span class="o">=</span> <span class="nx">random</span><span class="p">(</span><span class="nx">upperleft_x</span><span class="p">,</span> <span class="nx">lowerright_x</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">py</span> <span class="o">=</span> <span class="nx">random</span><span class="p">(</span><span class="nx">upperleft_y</span><span class="p">,</span> <span class="nx">lowerright_y</span><span class="p">);</span>
+    <span class="nx">strokeWeight</span><span class="p">(</span><span class="nx">random</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">));</span>
+    <span class="nx">point</span><span class="p">(</span><span class="nx">px</span><span class="p">,</span> <span class="nx">py</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">draw</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">}</span></code></pre></div>
+
+<h2>index.html</h2>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="o">&lt;!</span><span class="nx">doctype</span> <span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">quadrant</span><span class="o">&lt;</span><span class="err">/title&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;sketch.js&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+  <span class="o">&lt;</span><span class="err">/head&gt;</span>
+  <span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;sketch&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
+  <span class="o">&lt;</span><span class="err">/body&gt;</span>
+<span class="o">&lt;</span><span class="err">/html&gt;</span></code></pre></div>
+
+        </div>
+    </div>
+    </div>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
+      <script type="text/javascript" src="sketch.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
+    </body>
 </html>

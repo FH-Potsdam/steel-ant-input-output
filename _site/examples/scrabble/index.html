@@ -1,20 +1,140 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>a title</title>
-  <meta name="description" content="something">
-  <meta name="author" content="me">
-</head>
+<!-- example layout -->
+    <head>
+        <link rel="shortcut icon" href="/steel-ant-input-output/favicon.ico">
+        <title>scrabble</title>
+        <meta name="description" content="'Eingabe/Ausgabe' at FH-Potsdam (University of Applied Sciences Potsdam (Germany))">
+        <meta name="author" content="fabiantheblind">
+        <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="/steel-ant-input-output/bower_components/normalize-css/normalize.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/syntax.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/main.css">
+        <style type="text/stylesheet">
+        </style>
+    </head>
+    <body>
+    <div class="container">
+<!--     <h6 class="title"><a href="/">&laquo;&laquo; Eingabe Ausgabe Steel Ant</a></h6>-->
+    <div class="row">
+      <div class="col-md-12">
+        <div id="sketch"></div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="content">
+        <h1>scrabble</h1>
 
-<body>
+<p>Loads a .json and transforms the data so we can use it.  </p>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
-  <script type="text/javascript" src="sketch.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
-  <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
-<div id="sketch"/>
-<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-</body>
+<h2>sketch.js</h2>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">scrabble</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">preload</span><span class="p">(){</span>
+<span class="nx">scrabble</span> <span class="o">=</span> <span class="nx">loadJSON</span><span class="p">(</span><span class="s2">&quot;scrabble.json&quot;</span><span class="p">);</span>
+<span class="c1">// NEVER LOG IN PRELOAD TO THE CONSOLE !!!!!!!!!!!</span>
+<span class="p">}</span>
+<span class="c1">// getting started with p5js</span>
+<span class="kd">function</span> <span class="nx">setup</span><span class="p">(){</span>
+
+  <span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+  <span class="nx">canvas</span><span class="p">.</span><span class="nx">parent</span><span class="p">(</span><span class="s1">&#39;sketch&#39;</span><span class="p">);</span>
+  <span class="c1">// text(&quot;empty example&quot;, 10,10);</span>
+  <span class="c1">// console.log(scrabble);</span>
+  <span class="c1">// executed once</span>
+  <span class="kd">var</span> <span class="nx">letters</span> <span class="o">=</span> <span class="nx">scrabble</span><span class="p">.</span><span class="nx">letters</span><span class="p">;</span>
+  <span class="c1">// var numberOfObjects = 0;</span>
+  <span class="kd">var</span> <span class="nx">values</span> <span class="o">=</span> <span class="p">[];</span>  <span class="c1">// will hold the point values</span>
+  <span class="kd">var</span> <span class="nx">letarr</span> <span class="o">=</span> <span class="p">[];</span> <span class="c1">// will hold the letter names</span>
+  <span class="kd">var</span> <span class="nx">tiles</span> <span class="o">=</span> <span class="p">[];</span> <span class="c1">// will hold the number of tiles</span>
+
+<span class="c1">// this is an special loop for objects</span>
+<span class="c1">// https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/for...in</span>
+  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">letters</span><span class="p">){</span>
+    <span class="nx">tiles</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">letters</span><span class="p">[</span><span class="nx">key</span><span class="p">].</span><span class="nx">tiles</span><span class="p">);</span> <span class="c1">// add the tile values to the array tiles</span>
+    <span class="nx">values</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">letters</span><span class="p">[</span><span class="nx">key</span><span class="p">].</span><span class="nx">points</span><span class="p">);</span><span class="c1">// add the point values to the array points</span>
+    <span class="nx">letarr</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span> <span class="c1">// add the keys a,b,c,d,... to the array letarr</span>
+  <span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nx">rectMode</span><span class="p">(</span><span class="nx">CENTER</span><span class="p">);</span>
+<span class="c1">// display it</span>
+<span class="kd">var</span> <span class="nx">step</span> <span class="o">=</span> <span class="nx">width</span><span class="o">/</span><span class="nx">values</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">values</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+  <span class="nx">text</span><span class="p">(</span><span class="nx">letarr</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span><span class="nx">x</span><span class="p">,(</span><span class="nx">height</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span><span class="p">);</span>
+  <span class="nx">rect</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">height</span><span class="o">/</span><span class="mi">2</span> <span class="p">,</span><span class="nx">tiles</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span><span class="nx">tiles</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+  <span class="nx">ellipse</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">height</span><span class="o">/</span><span class="mi">2</span> <span class="p">,</span><span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span><span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+
+  <span class="nx">x</span><span class="o">+=</span><span class="nx">step</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">draw</span><span class="p">(){</span>
+  <span class="c1">// executed all the time</span>
+<span class="p">}</span></code></pre></div>
+
+<h2>scrabble.json</h2>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="p">{</span>
+    <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;Tile distribution and points for the English-language edition of Scrabble&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;letters&quot;</span><span class="o">:</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;a&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">9</span> <span class="p">},</span>
+        <span class="s2">&quot;b&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">2</span> <span class="p">},</span>
+        <span class="s2">&quot;c&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">2</span> <span class="p">},</span>
+        <span class="s2">&quot;d&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">4</span> <span class="p">},</span>
+        <span class="s2">&quot;e&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span> <span class="mi">12</span> <span class="p">},</span>
+        <span class="s2">&quot;f&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">2</span> <span class="p">},</span>
+        <span class="s2">&quot;g&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">3</span> <span class="p">},</span>
+        <span class="s2">&quot;h&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">2</span> <span class="p">},</span>
+        <span class="s2">&quot;i&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">9</span> <span class="p">},</span>
+        <span class="s2">&quot;j&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">1</span> <span class="p">},</span>
+        <span class="s2">&quot;k&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">1</span> <span class="p">},</span>
+        <span class="s2">&quot;l&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">4</span> <span class="p">},</span>
+        <span class="s2">&quot;m&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">2</span> <span class="p">},</span>
+        <span class="s2">&quot;n&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">6</span> <span class="p">},</span>
+        <span class="s2">&quot;o&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">8</span> <span class="p">},</span>
+        <span class="s2">&quot;p&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">2</span> <span class="p">},</span>
+        <span class="s2">&quot;q&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">1</span> <span class="p">},</span>
+        <span class="s2">&quot;r&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">6</span> <span class="p">},</span>
+        <span class="s2">&quot;s&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">4</span> <span class="p">},</span>
+        <span class="s2">&quot;t&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">6</span> <span class="p">},</span>
+        <span class="s2">&quot;u&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">4</span> <span class="p">},</span>
+        <span class="s2">&quot;v&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">2</span> <span class="p">},</span>
+        <span class="s2">&quot;w&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">2</span> <span class="p">},</span>
+        <span class="s2">&quot;x&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">1</span> <span class="p">},</span>
+        <span class="s2">&quot;y&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span>  <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">2</span> <span class="p">},</span>
+        <span class="s2">&quot;z&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;points&quot;</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span>  <span class="mi">1</span> <span class="p">},</span>
+        <span class="s2">&quot;blank&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;tiles&quot;</span><span class="o">:</span> <span class="mi">2</span><span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<h2>index.html</h2>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="o">&lt;!</span><span class="nx">doctype</span> <span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span> <span class="nx">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">&quot;Content-Type&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;text/html; charset=utf-8&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">a</span> <span class="nx">title</span><span class="o">&lt;</span><span class="err">/title&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;description&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;something&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;author&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;me&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="err">/head&gt;</span>
+  <span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;sketch.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;sketch&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
+  <span class="o">&lt;</span><span class="err">/body&gt;</span>
+<span class="o">&lt;</span><span class="err">/html&gt;</span></code></pre></div>
+
+        </div>
+    </div>
+    </div>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
+      <script type="text/javascript" src="sketch.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
+    </body>
 </html>

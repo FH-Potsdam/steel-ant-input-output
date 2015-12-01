@@ -1,6 +1,6 @@
 <!doctype html>
-<!-- this is the node template -->
 <html lang="en">
+<!-- default layout -->
     <head>
         <link rel="shortcut icon" href="/steel-ant-input-output/favicon.ico">
         <title>ISS Astros</title>
@@ -9,37 +9,52 @@
         <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        <style>
-        body{
-        font-family:monospace;
-        font-style: normal;
-        padding-left:2em;
-        white-space: pre-wrap;
-        }
+        <link rel="stylesheet" href="/steel-ant-input-output/bower_components/normalize-css/normalize.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/syntax.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/main.css">
+        <style type="text/stylesheet">
         </style>
-        <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
     </head>
     <body>
-        <div class="container">
-            <!--     <h6 class="title"><a href="/">&laquo;&laquo; Eingabe Ausgabe Steel Ant</a></h6>-->
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>astros</h1>
+    <div class="container">
+<!--     <h6 class="title"><a href="/">&laquo;&laquo; Eingabe Ausgabe Steel Ant</a></h6>-->
+    <div class="row">
+        <div class="col-md-12" id="content">
+        <h1>astros</h1>
 
 <p>Make a web request to <a href="http://open-notify.org/">open-notify.org</a> and check who is in space.  </p>
 
 <p>Run it like this:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd </span>astros
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd </span>path/to/steel-ant-input-output/examples-nodejs/iss-api/astros
 npm install
-node index.js
-</code></pre></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12" id="source-code"></div>
-            </div>
+node index.js</code></pre></div>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="cm">/**</span>
+<span class="cm"> * call the now api of the iss</span>
+<span class="cm"> * and display twho is in space right now</span>
+<span class="cm"> */</span>
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;http://api.open-notify.org/astros.json&quot;</span><span class="p">;</span><span class="c1">// the API url</span>
+<span class="c1">// make the request</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span><span class="c1">// error check</span>
+    <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span> <span class="c1">// parse the string to JSON</span>
+    <span class="c1">// display how many people are in space right now</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;There are %s people in space right now.&quot;</span><span class="p">,</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">number</span><span class="p">);</span>
+    <span class="c1">// loop them all and tell us which spaceship and their name</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">people</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;On Craft: %s\tName: %s&quot;</span><span class="p">,</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">craft</span><span class="p">,</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">name</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></div>
+
         </div>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script type="text/javascript" src="/steel-ant-input-output/js/main-node.js"></script>
+    </div>
+    </div>
     </body>
 </html>

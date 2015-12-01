@@ -1,20 +1,109 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>a title</title>
-  <meta name="description" content="something">
-  <meta name="author" content="me">
-</head>
+<!-- example layout -->
+    <head>
+        <link rel="shortcut icon" href="/steel-ant-input-output/favicon.ico">
+        <title>lewitt 422</title>
+        <meta name="description" content="'Eingabe/Ausgabe' at FH-Potsdam (University of Applied Sciences Potsdam (Germany))">
+        <meta name="author" content="fabiantheblind">
+        <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="/steel-ant-input-output/bower_components/normalize-css/normalize.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/syntax.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/main.css">
+        <style type="text/stylesheet">
+        </style>
+    </head>
+    <body>
+    <div class="container">
+<!--     <h6 class="title"><a href="/">&laquo;&laquo; Eingabe Ausgabe Steel Ant</a></h6>-->
+    <div class="row">
+      <div class="col-md-12">
+        <div id="sketch"></div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="content">
+        <h1>lewitt 422</h1>
 
-<body>
+<p>Sol LeWitt wall drawings in code.  </p>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
-  <script type="text/javascript" src="sketch.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
-  <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
-<div id="sketch"/>
-<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-</body>
+<h2>sketch.js</h2>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="cm">/**</span>
+<span class="cm">   * @author: @fabiantheblind</span>
+<span class="cm">   * @license: MIT</span>
+<span class="cm">   *</span>
+<span class="cm">   * written for &quot;Eingabe, Ausgabe. Grundlagen der prozessorientierten Gestaltung&quot;</span>
+<span class="cm">   * @FHP WS 2013/2014 by Moika Hoinkis</span>
+<span class="cm">   *</span>
+<span class="cm">   * create works of Sol LeWitt in Processing</span>
+<span class="cm">   * http://www.massmoca.org/lewitt/grid.php</span>
+<span class="cm">   */</span>
+  <span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">450</span><span class="p">);</span>
+  <span class="nx">canvas</span><span class="p">.</span><span class="nx">parent</span><span class="p">(</span><span class="s1">&#39;sketch&#39;</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">hueoffset</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span> <span class="c1">//the offset of the hue from 0</span>
+  <span class="kd">var</span> <span class="nx">huerange</span> <span class="o">=</span> <span class="mi">120</span><span class="p">;</span> <span class="c1">// the range of the hue</span>
+  <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">60</span><span class="p">;</span> <span class="c1">// constant brightness</span>
+  <span class="kd">var</span> <span class="nx">satmin</span> <span class="o">=</span> <span class="mi">70</span><span class="p">;</span> <span class="c1">// saturation minimum</span>
+  <span class="kd">var</span> <span class="nx">satmax</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span> <span class="c1">// saturation maximum</span>
+  <span class="kd">var</span> <span class="nx">stepmin</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span> <span class="c1">// step minimum</span>
+  <span class="kd">var</span> <span class="nx">stepmax</span> <span class="o">=</span> <span class="mi">70</span><span class="p">;</span> <span class="c1">// step maximum</span>
+  <span class="kd">var</span> <span class="nx">step</span> <span class="o">=</span> <span class="nx">stepmin</span><span class="p">;</span> <span class="c1">// the actual step</span>
+
+  <span class="nx">background</span><span class="p">(</span><span class="mi">255</span><span class="p">);</span> <span class="c1">// bg color</span>
+  <span class="kd">var</span> <span class="nx">c</span><span class="p">;</span> <span class="c1">// will holf the color</span>
+
+  <span class="nx">colorMode</span><span class="p">(</span><span class="nx">HSB</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span> <span class="c1">// use HSB mode for easier handling of harmonics</span>
+  <span class="nx">noStroke</span><span class="p">();</span> <span class="c1">// dont ned a stroke</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * Lets loop.</span>
+<span class="cm">   * we will create some rectangles</span>
+<span class="cm">   * with a random height between the step min/max</span>
+<span class="cm">   * and the width of the canvas.</span>
+<span class="cm">   * we increase the y value each iteration with a random value</span>
+<span class="cm">   */</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">y</span> <span class="o">&lt;</span> <span class="nx">height</span><span class="p">;</span> <span class="nx">y</span> <span class="o">+=</span> <span class="nx">step</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="nx">step</span> <span class="o">=</span> <span class="p">(</span><span class="nx">random</span><span class="p">(</span><span class="nx">stepmin</span><span class="p">,</span> <span class="nx">stepmax</span><span class="p">));</span> <span class="c1">// we cast to var just because we use var for step</span>
+    <span class="nx">c</span> <span class="o">=</span> <span class="nx">color</span><span class="p">(</span><span class="nx">hueoffset</span> <span class="o">+</span> <span class="p">(</span><span class="nx">y</span> <span class="o">%</span> <span class="nx">huerange</span><span class="p">),</span> <span class="nx">random</span><span class="p">(</span><span class="nx">satmin</span><span class="p">,</span> <span class="nx">satmax</span><span class="p">),</span> <span class="nx">b</span><span class="p">);</span> <span class="c1">// calculate the color</span>
+    <span class="nx">fill</span><span class="p">(</span><span class="nx">c</span><span class="p">);</span> <span class="c1">// set the color</span>
+    <span class="nx">rect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">width</span><span class="p">,</span> <span class="nx">step</span><span class="p">);</span> <span class="c1">// draw he rectangke</span>
+  <span class="p">}</span> <span class="c1">// end of y loop</span>
+  <span class="c1">// saveFrame(&quot;lewitt-422.png&quot;);</span>
+
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">draw</span><span class="p">()</span> <span class="p">{}</span></code></pre></div>
+
+<h2>index.html</h2>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="o">&lt;!</span><span class="nx">doctype</span> <span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span> <span class="nx">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">&quot;Content-Type&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;text/html; charset=utf-8&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">a</span> <span class="nx">title</span><span class="o">&lt;</span><span class="err">/title&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;description&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;something&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;author&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;me&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="err">/head&gt;</span>
+  <span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;sketch.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;sketch&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
+    <span class="o">&lt;</span><span class="err">/body&gt;</span>
+  <span class="o">&lt;</span><span class="err">/html&gt;</span></code></pre></div>
+
+        </div>
+    </div>
+    </div>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
+      <script type="text/javascript" src="sketch.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
+    </body>
 </html>

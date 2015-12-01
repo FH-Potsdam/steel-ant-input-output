@@ -1,0 +1,18 @@
+html{
+  font-family: monospace;
+
+}
+body {
+  /*font-family: monospace;*/
+  /*font-style: normal;*/
+  /*padding-left: 2em;*/
+}
+
+#index + p{
+  white-space: pre-wrap;
+  line-height: 0.9em;
+}
+
+#sketch{
+  padding-top: 2em;
+}

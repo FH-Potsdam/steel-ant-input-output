@@ -1,5 +1,5 @@
 ---
-layout: node
+layout: default
 title: ISS Astros
 ---
 pass
@@ -9,6 +9,12 @@ Make a web request to [open-notify.org](http://open-notify.org/) and check when 
 
 Run it like this:
 
-    cd pass
-    npm install
-    node index.js
+{% highlight bash %}
+cd path/to/steel-ant-input-output/examples-nodejs/iss-api/pass
+npm install
+node index.js
+{% endhighlight %}
+
+{% highlight js %}
+{% include_relative index.js %}
+{% endhighlight %}

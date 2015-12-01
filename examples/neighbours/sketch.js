@@ -23,26 +23,26 @@ var get_neighbours = function(ndx, list, width, height, steps) {
   // for(var i = 0; i < list.length;i++){
   if (ndx < h_steps) {
     // we are at the left border
-    console.log('Left border with index "%s" point is at x: %s y: %s ', ndx, list[ndx].x, list[ndx].y);
+    //console.log('Left border with index "%s" point is at x: %s y: %s ', ndx, list[ndx].x, list[ndx].y);
     left = true;
   }
   if (ndx > (list.length - 1) - h_steps) {
     // right border
-    console.log('Right border with index "%s" point is at x: %s y: %s ', ndx, list[ndx].x, list[ndx].y);
+    //console.log('Right border with index "%s" point is at x: %s y: %s ', ndx, list[ndx].x, list[ndx].y);
     right = true;
   }
   if (ndx % (h_steps) === 0) {
     // upper border
-    console.log('Upper border with index "%s" point is at x: %s y: %s ', ndx, list[ndx].x, list[ndx].y);
+    //console.log('Upper border with index "%s" point is at x: %s y: %s ', ndx, list[ndx].x, list[ndx].y);
     top = true;
   }
   if (ndx % (h_steps) === h_steps - 1) {
     // lower border
-    console.log('Lower border with index "%s" point is at x: %s y: %s ', ndx, list[ndx].x, list[ndx].y);
+    //console.log('Lower border with index "%s" point is at x: %s y: %s ', ndx, list[ndx].x, list[ndx].y);
     bottom = true;
   }
   if (right !== true && left !== true && top !== true && bottom !== true) {
-    console.log('centered with index "%s" point is at x: %s y: %s ', ndx, list[ndx].x, list[ndx].y);
+    //console.log('centered with index "%s" point is at x: %s y: %s ', ndx, list[ndx].x, list[ndx].y);
     centered = true;
   }
   if (right === true && bottom === false && top === false) {

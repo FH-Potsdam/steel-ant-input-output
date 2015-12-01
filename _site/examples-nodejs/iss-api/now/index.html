@@ -1,6 +1,6 @@
 <!doctype html>
-<!-- this is the node template -->
 <html lang="en">
+<!-- default layout -->
     <head>
         <link rel="shortcut icon" href="/steel-ant-input-output/favicon.ico">
         <title>ISS Astros</title>
@@ -9,37 +9,54 @@
         <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        <style>
-        body{
-        font-family:monospace;
-        font-style: normal;
-        padding-left:2em;
-        white-space: pre-wrap;
-        }
+        <link rel="stylesheet" href="/steel-ant-input-output/bower_components/normalize-css/normalize.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/syntax.css">
+        <link rel="stylesheet" href="/steel-ant-input-output/css/main.css">
+        <style type="text/stylesheet">
         </style>
-        <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
     </head>
     <body>
-        <div class="container">
-            <!--     <h6 class="title"><a href="/">&laquo;&laquo; Eingabe Ausgabe Steel Ant</a></h6>-->
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>now</h1>
+    <div class="container">
+<!--     <h6 class="title"><a href="/">&laquo;&laquo; Eingabe Ausgabe Steel Ant</a></h6>-->
+    <div class="row">
+        <div class="col-md-12" id="content">
+        <h1>now</h1>
 
 <p>Make a web request to <a href="http://open-notify.org/">open-notify.org</a> and check where the iss is now.</p>
 
 <p>Run it like this:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd now
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd </span>path/to/steel-ant-input-output/examples-nodejs/iss-api/now
 npm install
-node index.js
-</code></pre></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12" id="source-code"></div>
-            </div>
+node index.js</code></pre></div>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="cm">/**</span>
+<span class="cm"> * call the now api of the iss</span>
+<span class="cm"> * and display the current location</span>
+<span class="cm"> */</span>
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">moment</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;moment&#39;</span><span class="p">);</span>
+
+<span class="c1">// this is our URL we make the request to</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;http://api.open-notify.org/iss-now.json&quot;</span><span class="p">;</span>
+<span class="c1">// now do that</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// error check</span>
+    <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span><span class="c1">// parse the resulting string to JSON</span>
+    <span class="c1">// convert the unix time to human readable time</span>
+    <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">.</span><span class="nx">unix</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">timestamp</span><span class="p">);</span>
+    <span class="c1">// log that to the console</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Position at date: %s&quot;</span><span class="p">,</span> <span class="nx">d</span><span class="p">.</span><span class="nx">toISOString</span><span class="p">());</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Latitude: %d&quot;</span><span class="p">,</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">iss_position</span><span class="p">.</span><span class="nx">latitude</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Longitude: %d&quot;</span><span class="p">,</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">iss_position</span><span class="p">.</span><span class="nx">longitude</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></div>
+
         </div>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script type="text/javascript" src="/steel-ant-input-output/js/main-node.js"></script>
+    </div>
+    </div>
     </body>
 </html>
