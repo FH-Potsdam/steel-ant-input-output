@@ -22,9 +22,7 @@ Still work in progress. Needs more comments and further refining
 
 ## issue.json
 
-{% highlight js %}
-{% include_relative issue.json %}
-{% endhighlight %}
+The issues.json file is to huge to display it in here. Take a look at [the raw source](issue.json).  
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
