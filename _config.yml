@@ -2,8 +2,8 @@ name: Eingabe Ausgabe Steel Ant
 markdown: redcarpet
 highlighter: pygments
 baseurl: /steel-ant-input-output
-exclude: ["examples/2015-10-28/index.html","examples/bounce-back-and-forth/index.html","examples/center-canvas/index.html","examples/center-canvas-flexbox/index.html","examples/colors/index.html","examples/conditions/index.html","examples/drawing-particle/index.html","examples/empty/index.html","examples/fiddle/index.html","examples/forloops/index.html","examples/geo-data-from-server/index.html","examples/geo-data-simple/index.html","examples/gindex-generator.sh/index.html","examples/images/index.html","examples/lewitt154/index.html","examples/lewitt422/index.html","examples/lewitt462/index.html","examples/lewitt630/index.html","examples/lines-from-the-middle/index.html","examples/load-image/index.html","examples/mesh/index.html","examples/modulo/index.html","examples/mouse_trail/index.html","examples/mouse_trails/index.html","examples/neighbours/index.html","examples/primitive-shapes/index.html","examples/process-json/index.html","examples/quadrants/index.html","examples/saveFrame/index.html","examples/scrabble/index.html","examples/stick-figure/index.html","examples/time/index.html","examples/typesafe/index.html","examples/whileloop/index.html"]
-mail: you@example.com
+exclude: ["examples/**/index.html"]
+mail: moron-zirfas@fh-potsdam.de
 sass:
   sass_dir: _sass
   style: :compressed
