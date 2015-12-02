@@ -40,6 +40,7 @@ title: Input Output (Eingabe Ausgabe)
 │   ├── [scrabble](examples/scrabble)  
 │   ├── [stick-figure](examples/stick-figure)   
 │   ├── [time](examples/time)   
+│   ├── [time-line-of-issues](examples/time-line-of-issues)   
 │   ├── [typesafe](examples/typesafe)   
 │   └── [whileloop](examples/whileloop)   
 └── students   
