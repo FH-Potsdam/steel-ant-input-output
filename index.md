@@ -7,6 +7,7 @@ title: Input Output (Eingabe Ausgabe)
 
 ├── examples-nodejs   
 │   ├── [geocode](examples-nodejs/geocode)  
+│   ├── [spot-the-iss](examples-nodejs/spot-the-iss)  
 │   └── iss-api  
 │       ├── [astros](examples-nodejs/iss-api/astros)  
 │       ├── [now](examples-nodejs/iss-api/now)  
