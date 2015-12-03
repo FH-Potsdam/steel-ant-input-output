@@ -1,7 +1,9 @@
 ---
 layout: example
 title: geo-data-from-server
+engine: p5
 ---
+
 # geo-data from server
 
 This example shows how to load a .json file. The file contains locations of the ISS. The mapping like this only works on an equirectangular map.  

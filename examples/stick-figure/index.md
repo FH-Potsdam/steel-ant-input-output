@@ -1,7 +1,9 @@
 ---
 layout: example
 title: stick figure
+engine: p5
 ---
+
 # stick figure
 
 A simple stick figure. Can be adjusted in size and position.  

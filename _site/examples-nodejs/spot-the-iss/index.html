@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<!-- example layout -->
+    <head>
+        <link type="text/stylesheet" rel="shortcut icon" href="/steel-ant-input-output/favicon.ico">
+        <title>spot the iss</title>
+        <meta name="description" content="'Eingabe/Ausgabe' at FH-Potsdam (University of Applied Sciences Potsdam (Germany))">
+        <meta name="author" content="fabiantheblind">
+        <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link type="text/stylesheet" rel="stylesheet" href="/steel-ant-input-output/css/normalize.css">
+        <link type="text/stylesheet" rel="stylesheet" href="/steel-ant-input-output/css/bootstrap/css/bootstrap.css">
+        <link type="text/stylesheet" rel="stylesheet" href="/steel-ant-input-output/css/syntax.css">
+        <link type="text/stylesheet" rel="stylesheet" href="/steel-ant-input-output/css/main.css">
+    </head>
+    <body>
+    <div class="container">
+        <div class="row">
+      <div class="col-md-12">
+      <a href="/steel-ant-input-output/"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to index</a>
+      </div>
+    </div>
+      
+
+    <div class="row">
+        <div class="col-md-12" id="content">
+        <h1>spot the ISS</h1>
+
+<p>Using the <a href="https://www.npmjs.com/package/spotthestation-rss-reader">ISS spotting</a> module to cache some data.  </p>
+
+<p>Run it like this:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd </span>path/to/steel-ant-input-output/examples-nodejs/spot-the-iss
+npm install
+node index.js</code></pre></div>
+
+<h2>index.js</h2>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;request&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">IssReader</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;spotthestation-rss-reader&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">issReader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">IssReader</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">locations</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Aachen&quot;</span><span class="p">,</span> <span class="s2">&quot;Achim&quot;</span><span class="p">,</span> <span class="s2">&quot;Amberg&quot;</span><span class="p">,</span> <span class="s2">&quot;Augsburg&quot;</span><span class="p">,</span> <span class="s2">&quot;Bad Neustadt&quot;</span><span class="p">,</span> <span class="s2">&quot;Balve&quot;</span><span class="p">,</span> <span class="s2">&quot;Bamberg&quot;</span><span class="p">,</span> <span class="s2">&quot;Bayreuth&quot;</span><span class="p">,</span> <span class="s2">&quot;Bergisch Gladbach&quot;</span><span class="p">,</span> <span class="s2">&quot;Berlin&quot;</span><span class="p">,</span> <span class="s2">&quot;Bielefeld&quot;</span><span class="p">,</span> <span class="s2">&quot;Birkenfeld&quot;</span><span class="p">,</span> <span class="s2">&quot;Bochum&quot;</span><span class="p">,</span> <span class="s2">&quot;Bonn&quot;</span><span class="p">,</span> <span class="s2">&quot;Bottrop&quot;</span><span class="p">,</span> <span class="s2">&quot;Braunschweig&quot;</span><span class="p">,</span> <span class="s2">&quot;Bremen&quot;</span><span class="p">,</span> <span class="s2">&quot;Bremerhaven&quot;</span><span class="p">,</span> <span class="s2">&quot;Buxtehude&quot;</span><span class="p">,</span> <span class="s2">&quot;Celle&quot;</span><span class="p">,</span> <span class="s2">&quot;Chemnitz&quot;</span><span class="p">,</span> <span class="s2">&quot;Cologne&quot;</span><span class="p">,</span> <span class="s2">&quot;Columbus Control Center Oberpfaffenhofen&quot;</span><span class="p">,</span> <span class="s2">&quot;Cottbus&quot;</span><span class="p">,</span> <span class="s2">&quot;Dahlenburg&quot;</span><span class="p">,</span> <span class="s2">&quot;Darmstadt&quot;</span><span class="p">,</span> <span class="s2">&quot;Deggendorf&quot;</span><span class="p">,</span> <span class="s2">&quot;Dortmund&quot;</span><span class="p">,</span> <span class="s2">&quot;Dresden&quot;</span><span class="p">,</span> <span class="s2">&quot;Duisburg&quot;</span><span class="p">,</span> <span class="s2">&quot;Dusseldorf&quot;</span><span class="p">,</span> <span class="s2">&quot;Eltville&quot;</span><span class="p">,</span> <span class="s2">&quot;Emlichheim&quot;</span><span class="p">,</span> <span class="s2">&quot;Erfurt&quot;</span><span class="p">,</span> <span class="s2">&quot;Erkelenz&quot;</span><span class="p">,</span> <span class="s2">&quot;Erlangen&quot;</span><span class="p">,</span> <span class="s2">&quot;Essen&quot;</span><span class="p">,</span> <span class="s2">&quot;Flensburg&quot;</span><span class="p">,</span> <span class="s2">&quot;Frankfurt am Main&quot;</span><span class="p">,</span> <span class="s2">&quot;Frankfurt an der Oder&quot;</span><span class="p">,</span> <span class="s2">&quot;Freiburg im Breisgau&quot;</span><span class="p">,</span> <span class="s2">&quot;Furth&quot;</span><span class="p">,</span> <span class="s2">&quot;Gelsenkirchen&quot;</span><span class="p">,</span> <span class="s2">&quot;Giebelstadt&quot;</span><span class="p">,</span> <span class="s2">&quot;Giessen&quot;</span><span class="p">,</span> <span class="s2">&quot;Gorlitz&quot;</span><span class="p">,</span> <span class="s2">&quot;Gottingen&quot;</span><span class="p">,</span> <span class="s2">&quot;Greifswald&quot;</span><span class="p">,</span> <span class="s2">&quot;Gundelfingen&quot;</span><span class="p">,</span> <span class="s2">&quot;Gutersloh&quot;</span><span class="p">,</span> <span class="s2">&quot;Hagen&quot;</span><span class="p">,</span> <span class="s2">&quot;Halle-Saale&quot;</span><span class="p">,</span> <span class="s2">&quot;Hamburg&quot;</span><span class="p">,</span> <span class="s2">&quot;Hamm&quot;</span><span class="p">,</span> <span class="s2">&quot;Hanau&quot;</span><span class="p">,</span> <span class="s2">&quot;Hannover&quot;</span><span class="p">,</span> <span class="s2">&quot;Heidelberg&quot;</span><span class="p">,</span> <span class="s2">&quot;Heilbronn&quot;</span><span class="p">,</span> <span class="s2">&quot;Helmstedt&quot;</span><span class="p">,</span> <span class="s2">&quot;Heppenheim&quot;</span><span class="p">,</span> <span class="s2">&quot;Herne&quot;</span><span class="p">,</span> <span class="s2">&quot;Herrenberg&quot;</span><span class="p">,</span> <span class="s2">&quot;Herten&quot;</span><span class="p">,</span> <span class="s2">&quot;Hildesheim&quot;</span><span class="p">,</span> <span class="s2">&quot;Hof&quot;</span><span class="p">,</span> <span class="s2">&quot;Holzkirchen&quot;</span><span class="p">,</span> <span class="s2">&quot;Idar-Oberstein&quot;</span><span class="p">,</span> <span class="s2">&quot;Ingolstadt&quot;</span><span class="p">,</span> <span class="s2">&quot;Isen&quot;</span><span class="p">,</span> <span class="s2">&quot;Jena&quot;</span><span class="p">,</span> <span class="s2">&quot;Kaiserslautern&quot;</span><span class="p">,</span> <span class="s2">&quot;Karlsruhe&quot;</span><span class="p">,</span> <span class="s2">&quot;Kassel&quot;</span><span class="p">,</span> <span class="s2">&quot;Kempen&quot;</span><span class="p">,</span> <span class="s2">&quot;Kiel&quot;</span><span class="p">,</span> <span class="s2">&quot;Koblenz&quot;</span><span class="p">,</span> <span class="s2">&quot;Konstanz&quot;</span><span class="p">,</span> <span class="s2">&quot;Krefeld&quot;</span><span class="p">,</span> <span class="s2">&quot;Kropp&quot;</span><span class="p">,</span> <span class="s2">&quot;Landau&quot;</span><span class="p">,</span> <span class="s2">&quot;Landshut&quot;</span><span class="p">,</span> <span class="s2">&quot;Leichlingen&quot;</span><span class="p">,</span> <span class="s2">&quot;Leipzig&quot;</span><span class="p">,</span> <span class="s2">&quot;Leonberg&quot;</span><span class="p">,</span> <span class="s2">&quot;Leverkusen&quot;</span><span class="p">,</span> <span class="s2">&quot;Lubeck&quot;</span><span class="p">,</span> <span class="s2">&quot;Ludenscheid&quot;</span><span class="p">,</span> <span class="s2">&quot;Ludwigshafen&quot;</span><span class="p">,</span> <span class="s2">&quot;Luneburg&quot;</span><span class="p">,</span> <span class="s2">&quot;Magdeburg&quot;</span><span class="p">,</span> <span class="s2">&quot;Mainz&quot;</span><span class="p">,</span> <span class="s2">&quot;Mannheim&quot;</span><span class="p">,</span> <span class="s2">&quot;Marburg&quot;</span><span class="p">,</span> <span class="s2">&quot;Meppen&quot;</span><span class="p">,</span> <span class="s2">&quot;Meuselwitz&quot;</span><span class="p">,</span> <span class="s2">&quot;Minden&quot;</span><span class="p">,</span> <span class="s2">&quot;Moers&quot;</span><span class="p">,</span> <span class="s2">&quot;Monchengladbach&quot;</span><span class="p">,</span> <span class="s2">&quot;Mulheim&quot;</span><span class="p">,</span> <span class="s2">&quot;Munchen&quot;</span><span class="p">,</span> <span class="s2">&quot;Munster&quot;</span><span class="p">,</span> <span class="s2">&quot;Naumburg&quot;</span><span class="p">,</span> <span class="s2">&quot;Netphen&quot;</span><span class="p">,</span> <span class="s2">&quot;Neuss&quot;</span><span class="p">,</span> <span class="s2">&quot;Neustadt&quot;</span><span class="p">,</span> <span class="s2">&quot;Northeim&quot;</span><span class="p">,</span> <span class="s2">&quot;Nuremberg&quot;</span><span class="p">,</span> <span class="s2">&quot;Nurtingen&quot;</span><span class="p">,</span> <span class="s2">&quot;Offenbach&quot;</span><span class="p">,</span> <span class="s2">&quot;Oldenburg&quot;</span><span class="p">,</span> <span class="s2">&quot;Osnabruck&quot;</span><span class="p">,</span> <span class="s2">&quot;Osterhofen&quot;</span><span class="p">,</span> <span class="s2">&quot;Paderborn&quot;</span><span class="p">,</span> <span class="s2">&quot;Pforzheim&quot;</span><span class="p">,</span> <span class="s2">&quot;Potsdam&quot;</span><span class="p">,</span> <span class="s2">&quot;Ramstein&quot;</span><span class="p">,</span> <span class="s2">&quot;Rastede&quot;</span><span class="p">,</span> <span class="s2">&quot;Recklinghausen&quot;</span><span class="p">,</span> <span class="s2">&quot;Regensburg&quot;</span><span class="p">,</span> <span class="s2">&quot;Remscheid&quot;</span><span class="p">,</span> <span class="s2">&quot;Reutlingen&quot;</span><span class="p">,</span> <span class="s2">&quot;Rheda-Wdbrck&quot;</span><span class="p">,</span> <span class="s2">&quot;Rodgau&quot;</span><span class="p">,</span> <span class="s2">&quot;Rostock&quot;</span><span class="p">,</span> <span class="s2">&quot;Saarbrucken&quot;</span><span class="p">,</span> <span class="s2">&quot;Salzgitter&quot;</span><span class="p">,</span> <span class="s2">&quot;Schleswig&quot;</span><span class="p">,</span> <span class="s2">&quot;Schwelm&quot;</span><span class="p">,</span> <span class="s2">&quot;Senftenberg&quot;</span><span class="p">,</span> <span class="s2">&quot;Siegen&quot;</span><span class="p">,</span> <span class="s2">&quot;Solingen&quot;</span><span class="p">,</span> <span class="s2">&quot;Spangdahlem Air Base&quot;</span><span class="p">,</span> <span class="s2">&quot;Stuttgart&quot;</span><span class="p">,</span> <span class="s2">&quot;Trier&quot;</span><span class="p">,</span> <span class="s2">&quot;Trostberg&quot;</span><span class="p">,</span> <span class="s2">&quot;Tubingen&quot;</span><span class="p">,</span> <span class="s2">&quot;Ulm&quot;</span><span class="p">,</span> <span class="s2">&quot;Villingen&quot;</span><span class="p">,</span> <span class="s2">&quot;Walldorf&quot;</span><span class="p">,</span> <span class="s2">&quot;Weinheim&quot;</span><span class="p">,</span> <span class="s2">&quot;Wiesbaden&quot;</span><span class="p">,</span> <span class="s2">&quot;Winsen&quot;</span><span class="p">,</span> <span class="s2">&quot;Witten&quot;</span><span class="p">,</span> <span class="s2">&quot;Wolfsburg&quot;</span><span class="p">,</span> <span class="s2">&quot;Wuerzburg&quot;</span><span class="p">,</span> <span class="s2">&quot;Wuppertal&quot;</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">RSS_URI</span> <span class="o">=</span> <span class="s1">&#39;http://spotthestation.nasa.gov/sightings/indexrss.cfm?&#39;</span> <span class="o">+</span> <span class="s1">&#39;country=Germany&amp;region=None&amp;city=&#39;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="kd">var</span> <span class="nx">timer</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+  <span class="nx">request</span><span class="p">(</span><span class="nx">RSS_URI</span> <span class="o">+</span> <span class="nx">locations</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span>
+      <span class="nx">issReader</span><span class="p">.</span><span class="nx">parseRSS</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// console.log(data.constructor.name);</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+        <span class="nx">i</span><span class="o">++</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFile</span><span class="p">(</span><span class="s1">&#39;iss-spotting.json&#39;</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">res</span><span class="p">),</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;wrote data to file&#39;</span><span class="p">);</span>
+            <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">timer</span><span class="p">);</span>
+          <span class="p">});</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">},</span> <span class="mi">2000</span><span class="p">);</span></code></pre></div>
+
+<h2>package.json</h2>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="p">{</span>
+  <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;spot-the-iss&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;version&quot;</span><span class="o">:</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;main&quot;</span><span class="o">:</span> <span class="s2">&quot;index.js&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;scripts&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;test&quot;</span><span class="o">:</span> <span class="s2">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;author&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;license&quot;</span><span class="o">:</span> <span class="s2">&quot;ISC&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;dependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;request&quot;</span><span class="o">:</span> <span class="s2">&quot;^2.67.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;spotthestation-rss-reader&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.1.2&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+        </div>
+    </div>
+          <footer>
+
+        <p>To use this code you need to:</p>
+        <ol>
+          <li>create the files (e.g. sketch.js, index.html styles.css, data.json, package.json …)</li>
+          <li>start a local server. We suggest <a href="https://www.npmjs.com/package/reload">reload</a></li>
+          <li>direct your browser to <a href="http://localhoast:8080">http://localhoast:8080</a></li>
+        </ol>
+      </footer>
+    </div>
+      
+    </body>
+</html>

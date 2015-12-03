@@ -21,30 +21,27 @@
       {% include home.html %}
       </div>
     </div>
+      {% if page.engine == 'p5' %}
     <div class="row">
       <div class="col-md-12">
         <div id="sketch"></div>
       </div>
     </div>
+      {% endif %}
+
     <div class="row">
         <div class="col-md-12" id="content">
         {{ content }}
         </div>
     </div>
-      <footer>
-
-        <p>To use this code you need to:</p>
-        <ol>
-          <li>create the files (e.g. sketch.js, index.html styles.css, data.json …)</li>
-          <li>start a local server. We suggest <a href="https://www.npmjs.com/package/reload">reload</a></li>
-          <li>direct your browser to <a href="http://localhoast:8080">http://localhoast:8080</a></li>
-        </ol>
-      </footer>
+    {% include footer.html %}
     </div>
+      {% if page.engine == 'p5' %}
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
       <script type="text/javascript" src="sketch.js"></script>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
       <script type="text/javascript" src="{{ site.baseurl }}/js/screenlog.min.js"></script>
       <script type="text/javascript" src="{{ site.baseurl }}/js/main.js"></script>
+      {% endif %}
     </body>
 </html>

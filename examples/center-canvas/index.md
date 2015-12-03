@@ -1,7 +1,9 @@
 ---
 layout: example
 title: center-canvas
+engine: p5
 ---
+
 # center canvas
 
 This sketch shows how to center a canvas within a .html document. 

@@ -1,7 +1,9 @@
 ---
 layout: example
 title: mouse trail
+engine: p5
 ---
+
 # mouse trail
 
 Draw a trail with the mouse. The last 100 points are saved in an array.  

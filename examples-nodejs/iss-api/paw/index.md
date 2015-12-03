@@ -1,5 +1,5 @@
 ---
-layout: node
+layout: example
 title: ISS Astros
 ---
 PAW

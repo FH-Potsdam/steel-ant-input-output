@@ -1,7 +1,9 @@
 ---
 layout: example
 title: center-canvas-flexbox
+engine: p5
 ---
+
 # center canvas flexbox
 
 This is the same as [center-canvas](../center-canvas) but using the flexbox css property.  

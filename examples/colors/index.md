@@ -1,7 +1,9 @@
 ---
 layout: example
 title: colors
+engine: p5
 ---
+
 # colors
 
 This sketch shows how to use the HSL/HSB color mode for ceating colors.  
