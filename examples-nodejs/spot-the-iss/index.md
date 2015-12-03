@@ -16,9 +16,15 @@ node index.js
 {% endhighlight %}
 
 
-## index.js 
+## index.js  
+
 {% highlight js %}
 {% include_relative index.js %}
 {% endhighlight %}
 
+## package.json  
+
+{% highlight js %}
+{% include_relative package.json %}
+{% endhighlight %}
 
