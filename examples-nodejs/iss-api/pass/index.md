@@ -1,7 +1,9 @@
 ---
-layout: default
+layout: example
 title: ISS Astros
+engine: node
 ---
+
 pass
 ====
 

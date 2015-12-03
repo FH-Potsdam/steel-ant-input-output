@@ -1,7 +1,9 @@
 ---
 layout: example
 title: geo data simple
+engine: p5
 ---
+
 # geo data simple  
 
 Super simple sketch that maps a lattitude longitude location onto a map. Works only with an equirectangular map.  

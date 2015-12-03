@@ -1,6 +1,7 @@
 ---
-layout: default
+layout: example
 title: geocode locations
+engine: node
 ---
 
 geocode
