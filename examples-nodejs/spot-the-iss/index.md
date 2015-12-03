@@ -18,7 +18,7 @@ node index.js
 
 ## index.js 
 {% highlight js %}
-{% include_relative sketch.js %}
+{% include_relative index.js %}
 {% endhighlight %}
 
 
