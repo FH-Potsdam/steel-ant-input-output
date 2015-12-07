@@ -19,7 +19,7 @@ var names = ["antsteelmule", "dziewi", "josues", "Logetcrea", "lpaubielsa", "mar
     });
     // create a new issue and add it to the milestone
     execSync(
-      'ghi open "Upload your presentation into the incom.org workspace until 02.12.2015 09:00" -u ' + names[i] + ' --milestone 4 --label task -m "use the the folder Zwischenpräsentation Projekt 2 https://incom.org/workspace/6176#list-f10909"', {
+      'ghi open "Post a status update into the incom.org workspace" -u ' + names[i] + ' --milestone 4 --label task -m "https://incom.org/workspace/6176 due 2015.12.08. 23:59"', {
         encoding: 'utf8',
         stdio: [0, 1, 2]
       }
