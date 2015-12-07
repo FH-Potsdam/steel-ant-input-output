@@ -22,6 +22,5 @@ This example shows how to load a .json file. The file contains locations of the 
 
 ## iss-now.json 
 
-{% highlight js %}
-{% include_relative iss-now.json %}
-{% endhighlight %}
+The File [iss-now.json](iss-now.json) is to big to be displayed here.   
+
