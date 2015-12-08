@@ -1,0 +1,21 @@
+---
+layout: example
+title: cross domain call with jsonp
+engine: p5
+---
+
+# cross domain call with jsonp
+
+To call the open-notify.org API ISS now from any domain we need to make a cross domain call. This is normally restricted. Luckily the open-notify.org API allows to make JSONP calls. See this [stackoverflow](http://stackoverflow.com/questions/11736431/make-cross-domain-ajax-jsonp-request-with-jquery) for further insight.  
+
+This technique should also work for the pass time and the astros API.  
+
+
+## sketch.js 
+{% highlight js %}
+{% include_relative sketch.js %}
+{% endhighlight %}
+## index.html 
+{% highlight js %}
+{% include_relative index.html %}
+{% endhighlight %}
