@@ -32,6 +32,7 @@ function setup() {
   console.log(timeConverter(iss.timestamp)); // log the time
   console.log(iss);// log the data
   var canvas = createCanvas(360, 180); // draw the canvas
+  canvas.parent('sketch');
   var lat = iss.iss_position.latitude; // get lat of the current position
   var lon = iss.iss_position.longitude;// get lat of the current position
   x = map(lon, -180, 180, 0, width); // map lon to x on our canvas
