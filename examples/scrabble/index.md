@@ -19,6 +19,6 @@ Loads a .json and transforms the data so we can use it.
 
 
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

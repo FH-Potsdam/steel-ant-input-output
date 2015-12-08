@@ -19,6 +19,6 @@ Shows how to load and process a .json file
 
 
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

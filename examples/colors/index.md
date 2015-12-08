@@ -13,6 +13,6 @@ This sketch shows how to use the HSL/HSB color mode for ceating colors.
 {% include_relative sketch.js %}
 {% endhighlight %}
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

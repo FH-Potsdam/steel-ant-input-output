@@ -13,6 +13,6 @@ Filling the canas with two for loops. Creating an array of circles.
 {% include_relative sketch.js %}
 {% endhighlight %}
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

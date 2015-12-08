@@ -13,6 +13,6 @@ Creates a mesh on the canvas. All the points are connected.
 {% include_relative sketch.js %}
 {% endhighlight %}
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

@@ -13,6 +13,6 @@ Shows how to load an image. Needs to be on a server.
 {% include_relative sketch.js %}
 {% endhighlight %}
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

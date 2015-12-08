@@ -14,6 +14,6 @@ This sketch makes a ball bounce back and forth on the canvas.
 {% include_relative sketch.js %}
 {% endhighlight %}
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

@@ -13,6 +13,6 @@ Here you see how to use conditions. We are using the `if else` and the `switch` 
 {% include_relative sketch.js %}
 {% endhighlight %}
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

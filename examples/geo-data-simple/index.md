@@ -13,6 +13,6 @@ Super simple sketch that maps a lattitude longitude location onto a map. Works o
 {% include_relative sketch.js %}
 {% endhighlight %}
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

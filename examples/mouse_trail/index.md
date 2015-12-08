@@ -13,6 +13,6 @@ Draw a trail with the mouse. The last 100 points are saved in an array.
 {% include_relative sketch.js %}
 {% endhighlight %}
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

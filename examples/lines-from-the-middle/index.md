@@ -17,6 +17,6 @@ Drawing a line from one middle to another with some jitter.
 {% endhighlight %}
 
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

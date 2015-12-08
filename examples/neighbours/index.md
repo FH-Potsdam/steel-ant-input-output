@@ -21,6 +21,6 @@ This code calculates the neighbours for a cell in an 1 dimensional array.
 {% include_relative sketch.js %}
 {% endhighlight %}
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

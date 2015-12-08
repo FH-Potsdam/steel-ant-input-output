@@ -15,7 +15,7 @@ This example shows how to load a .json file. The file contains locations of the 
 
 ## index.html 
 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}
 

@@ -13,6 +13,6 @@ Shows how to draw with particles. We are using a pseudo class.
 {% include_relative sketch.js %}
 {% endhighlight %}
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

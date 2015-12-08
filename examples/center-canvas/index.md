@@ -16,6 +16,6 @@ This sketch shows how to center a canvas within a .html document.
 {% include_relative styles.css %}
 {% endhighlight %}
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}
