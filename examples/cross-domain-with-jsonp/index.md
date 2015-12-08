@@ -10,7 +10,6 @@ To call the open-notify.org API ISS now from any domain we need to make a cross 
 
 This technique should also work for the pass time and the astros API.  
 
-
 ## sketch.js 
 {% highlight js %}
 {% include_relative sketch.js %}
