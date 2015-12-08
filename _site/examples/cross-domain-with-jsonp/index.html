@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<!-- example layout -->
+    <head>
+        <link type="text/stylesheet" rel="shortcut icon" href="/steel-ant-input-output/favicon.ico">
+        <title>cross domain call with jsonp</title>
+        <meta name="description" content="'Eingabe/Ausgabe' at FH-Potsdam (University of Applied Sciences Potsdam (Germany))">
+        <meta name="author" content="fabiantheblind">
+        <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link type="text/stylesheet" rel="stylesheet" href="/steel-ant-input-output/css/normalize.css">
+        <link type="text/stylesheet" rel="stylesheet" href="/steel-ant-input-output/css/bootstrap/css/bootstrap.css">
+        <link type="text/stylesheet" rel="stylesheet" href="/steel-ant-input-output/css/syntax.css">
+        <link type="text/stylesheet" rel="stylesheet" href="/steel-ant-input-output/css/main.css">
+    </head>
+    <body>
+    <div class="container">
+        <div class="row">
+      <div class="col-md-12">
+      <a href="/steel-ant-input-output/"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to index</a>
+      </div>
+    </div>
+      
+    <div class="row">
+      <div class="col-md-12">
+        <div id="sketch"></div>
+      </div>
+    </div>
+      
+
+    <div class="row">
+        <div class="col-md-12" id="content">
+        <h1>cross domain call with jsonp</h1>
+
+<p>To call the open-notify.org API ISS now from any domain we need to make a cross domain call. This is normally restricted. Luckily the open-notify.org API allows to make JSONP calls. See this <a href="http://stackoverflow.com/questions/11736431/make-cross-domain-ajax-jsonp-request-with-jquery">stackoverflow</a> for further insight.  </p>
+
+<p>It&#39;s important that you have the this line in your index.html file:  </p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://api.open-notify.org/iss-now.json?callback=getData&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></div>
+
+<p>This technique should also work for the pass time and the astros API.  </p>
+
+<h2>sketch.js</h2>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">iss</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">worldmap</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * getData calls the the JSONP API of open notify</span>
+<span class="cm"> */</span>
+<span class="kd">function</span> <span class="nx">getData</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">iss</span> <span class="o">=</span> <span class="nx">data</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cm">/**</span>
+<span class="cm"> * just to see the date</span>
+<span class="cm"> * taken from</span>
+<span class="cm"> * http://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript</span>
+<span class="cm"> */</span>
+<span class="kd">function</span> <span class="nx">timeConverter</span><span class="p">(</span><span class="nx">UNIX_timestamp</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">UNIX_timestamp</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">months</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Jan&#39;</span><span class="p">,</span> <span class="s1">&#39;Feb&#39;</span><span class="p">,</span> <span class="s1">&#39;Mar&#39;</span><span class="p">,</span> <span class="s1">&#39;Apr&#39;</span><span class="p">,</span> <span class="s1">&#39;May&#39;</span><span class="p">,</span> <span class="s1">&#39;Jun&#39;</span><span class="p">,</span> <span class="s1">&#39;Jul&#39;</span><span class="p">,</span> <span class="s1">&#39;Aug&#39;</span><span class="p">,</span> <span class="s1">&#39;Sep&#39;</span><span class="p">,</span> <span class="s1">&#39;Oct&#39;</span><span class="p">,</span> <span class="s1">&#39;Nov&#39;</span><span class="p">,</span> <span class="s1">&#39;Dec&#39;</span><span class="p">];</span>
+  <span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">month</span> <span class="o">=</span> <span class="nx">months</span><span class="p">[</span><span class="nx">a</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()];</span>
+  <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">getDate</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">hour</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">getHours</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">min</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">sec</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="nx">date</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">month</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">year</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">hour</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">min</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">sec</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">time</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">worldmap</span> <span class="o">=</span> <span class="nx">loadImage</span><span class="p">(</span><span class="s1">&#39;world-map.png&#39;</span><span class="p">);</span> <span class="c1">// load the image</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;We received the data from the ISS location via a jsonp callback&#39;</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">timeConverter</span><span class="p">(</span><span class="nx">iss</span><span class="p">.</span><span class="nx">timestamp</span><span class="p">));</span> <span class="c1">// log the time</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">iss</span><span class="p">);</span><span class="c1">// log the data</span>
+  <span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">360</span><span class="p">,</span> <span class="mi">180</span><span class="p">);</span> <span class="c1">// draw the canvas</span>
+  <span class="nx">canvas</span><span class="p">.</span><span class="nx">parent</span><span class="p">(</span><span class="s1">&#39;sketch&#39;</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">lat</span> <span class="o">=</span> <span class="nx">iss</span><span class="p">.</span><span class="nx">iss_position</span><span class="p">.</span><span class="nx">latitude</span><span class="p">;</span> <span class="c1">// get lat of the current position</span>
+  <span class="kd">var</span> <span class="nx">lon</span> <span class="o">=</span> <span class="nx">iss</span><span class="p">.</span><span class="nx">iss_position</span><span class="p">.</span><span class="nx">longitude</span><span class="p">;</span><span class="c1">// get lat of the current position</span>
+  <span class="nx">x</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">lon</span><span class="p">,</span> <span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">width</span><span class="p">);</span> <span class="c1">// map lon to x on our canvas</span>
+  <span class="nx">y</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">lat</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">height</span><span class="p">);</span><span class="c1">// map lat to y on our canvas</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">draw</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// draw all that stuff</span>
+  <span class="nx">background</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="nx">image</span><span class="p">(</span><span class="nx">worldmap</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="nx">ellipse</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+
+
+
+<span class="p">}</span></code></pre></div>
+
+<h2>index.html</h2>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=utf-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>{page.title}<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;something&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;author&quot;</span> <span class="na">content=</span><span class="s">&quot;me&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;http://code.jquery.com/jquery-2.1.4.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;sketch.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://api.open-notify.org/iss-now.json?callback=getData&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;sketch&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span></code></pre></div>
+
+        </div>
+    </div>
+          <footer>
+
+        <p>To use this code you need to:</p>
+        <ol>
+          <li>create the files (e.g. sketch.js, index.html styles.css, data.json, package.json …)</li>
+          <li>start a local server. We suggest <a href="https://www.npmjs.com/package/reload">reload</a></li>
+          <li>direct your browser to <a href="http://localhoast:8080">http://localhoast:8080</a></li>
+        </ol>
+      </footer>
+    </div>
+      
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
+      <script type="text/javascript" src="sketch.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
+      
+      
+      <script src="http://api.open-notify.org/iss-now.json?callback=getData"></script>
+      
+    </body>
+</html>

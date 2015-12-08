@@ -17,6 +17,6 @@ This is the same as [center-canvas](../center-canvas) but using the flexbox css 
 {% include_relative styles.css %}
 {% endhighlight %}
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

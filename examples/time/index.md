@@ -11,6 +11,6 @@ How to work with time? Take a look into the console on the upper right of this w
 {% include_relative sketch.js %}
 {% endhighlight %}
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

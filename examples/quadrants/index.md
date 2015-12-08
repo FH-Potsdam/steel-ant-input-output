@@ -13,6 +13,6 @@ Devides the whole canvas in some quadrants and draws then a point per quadrant.
 {% include_relative sketch.js %}
 {% endhighlight %}
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}

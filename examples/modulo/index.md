@@ -13,6 +13,6 @@ How to use module? See [MDN Operators/Arithmetic/Operators#Remainder](https://de
 {% include_relative sketch.js %}
 {% endhighlight %}
 ## index.html 
-{% highlight js %}
+{% highlight html %}
 {% include_relative index.html %}
 {% endhighlight %}
