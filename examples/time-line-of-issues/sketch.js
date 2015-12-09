@@ -15,6 +15,7 @@ function setup() {
    now = moment();
    start = moment('2015-10-21');
   // console.log(start);
+
   textSize(txtHeight);
   colorMode(HSL, 360, 100,100,100);
 
@@ -99,6 +100,9 @@ function textRotate(x,y,deg,txt){
   push();
   translate(x, y);
   rotate(radians(deg));
+  textStyle(BOLD);
+  textAlign(LEFT);
+
   text(txt, 0,0);
   pop();
 }
@@ -120,7 +124,13 @@ function Bar(_x,_y,_w,_h,data){
     if(this.over === true){
       fill('#000000');
       noStroke();
-      text(this.d.assignee + '\n' +this.d.title, mouseX, mouseY);
+      textAlign(RIGHT);
+      textStyle(BOLD);
+      textSize(18);
+      text(this.d.assignee , mouseX, mouseY);
+      textStyle(NORMAL);
+      textSize(txtHeight);
+      text(this.d.title , mouseX, mouseY + (txtHeight*1.2));
 
     }
   }
