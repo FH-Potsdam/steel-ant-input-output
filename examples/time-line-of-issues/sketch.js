@@ -32,83 +32,6 @@ var enumerateDaysBetweenDates = function(startDate, endDate) {
 };
 
 
-function preload() {
-  data = loadJSON('issue.json');
-}
-
-function setup() {
-   now = moment();
-   start = moment('2015-10-21');
-  // console.log(start);
-
-  textSize(txtHeight);
-  colorMode(HSL, 360, 100,100,100);
-
-  var extract = [];
-  for (var i = 0; i < data.length; i++) {
-    var created = moment(data[i].created_at);
-    // issues_created.push(created.unix());
-    // assignees.push(data[i].assignee.login);
-    // titles.push(data[i].title);
-    // console.log(data[i].closed_at);
-    var end = data[i].closed_at === null ? now.unix() : moment(data[i].closed_at).unix();
-    var isopen = data[i].closed_at === null ? true : false;
-    if(data[i].assignee === null || data[i].title === null){
-      //skip content that has no one assigned
-      continue;
-    }
-    extract.push({'created':created.unix(),
-      'assignee': data[i].assignee.login,
-      'title': data[i].title,
-      'end':end,
-      'isopen':isopen
-    });
-  }
-// http://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects
-  extract.sort(function(a, b) {
-    return parseFloat(a.created) - parseFloat(b.created);
-});
-  // http://stackoverflow.com/questions/6712034/sort-array-by-firstname-alphabetically-in-javascript
-//   extract.sort(function(a, b){
-//     if(a.assignee < b.assignee) return -1;
-//     if(a.assignee > b.assignee) return 1;
-//     return 0;
-// });
-  var canvas = createCanvas(800, 1500);
-  canvas.parent('sketch');
-  // xAxis();
-  var y = 20;
-  var gutter = 2;
-  var h = ganttheight / extract.length - 1;
-  // console.log(extract);
-
-
-  for (var j = 0; j < extract.length; j++) {
-    y = y + h + gutter;
-    var x = map(extract[j].created, start.unix(), now.unix(), margin, width- margin);
-    // text(extract[j].assignee, x - 100, y + 9);
-    var xw= map(extract[j].end, start.unix(), now.unix(), margin, width- margin);
-    var w = xw - x;
-    var b = new Bar(x,y,w,h, extract[j]);
-    bars.push(b);
-    // rect(x, y, w, h);
-  }
-
-  var dates = enumerateDaysBetweenDates(start, now);
-
-  var linestep = (width-(margin*2))/dates.length;
-
-  for(var k = 0; k <= dates.length;k++){
-    var x1 = linestep*(k+1);
-    var y1 = 0;
-    var x2 = linestep*(k+1);
-    var y2 = height;
-    var l = new xAxisLine(x1,y1,x2,y2,dates[k],k);
-    xAxisLines.push(l);
-  }
-}
-
-
 function xAxisLine (_x1,_y1,_x2,_y2,_d,_i){
   this.index = _i;
   this.x1 = _x1;
@@ -161,47 +84,6 @@ function xAxisLine (_x1,_y1,_x2,_y2,_d,_i){
   text(this.txt, 0,0);
   pop();
   }
-}
-
-function xAxis(){
-  noStroke();
-  fill('#000000');
-  var step = 10;
-  var twstart = textWidth(start.format(timeFormat));
-  textRotate(margin + (txtHeight/2), height - twstart - margin, 90, start.format(timeFormat));
-
-  var dr = moment.range(start, now);
-  dr.center();
-
-  var middleDt = moment(dr.center());
-  var twm = textWidth(middleDt.format(timeFormat));
-  textRotate((width / 2) + (txtHeight/2) , height - twm -margin, 90, middleDt.format(timeFormat));
-
-  var twnow = textWidth(now.format(timeFormat));
-  textRotate((width - margin) + (txtHeight/2), height -twnow -margin, 90, now.format(timeFormat));
-
-  stroke('#C9C9C9');
-  for(var x = margin; x <= width - margin; x +=step){
-    line(x,0, x, height);
-  }
-  stroke('#000000');
-
-  strokeWeight(1);
-  line(margin, 0, margin, height);
-  line(width / 2, 0, width / 2, height);
-  line(width - margin, 0, width - margin, height);
-}
-
-
-function textRotate(x,y,deg,txt){
-  push();
-  translate(x, y);
-  rotate(radians(deg));
-  textStyle(BOLD);
-  textAlign(LEFT);
-
-  text(txt, 0,0);
-  pop();
 }
 
 function Bar(_x,_y,_w,_h,data){
@@ -260,9 +142,80 @@ this.run = function(){
 }
 
 
+function preload() {
+  data = loadJSON('issue.json');
+}
+
+function setup() {
+   now = moment();
+   start = moment('2015-10-21');
+  // console.log(start);
+
+  textSize(txtHeight);
+  colorMode(HSL, 360, 100,100,100);
+
+  var extract = [];
+  for (var i = 0; i < data.length; i++) {
+    var created = moment(data[i].created_at);
+    // issues_created.push(created.unix());
+    // assignees.push(data[i].assignee.login);
+    // titles.push(data[i].title);
+    // console.log(data[i].closed_at);
+    var end = data[i].closed_at === null ? now.unix() : moment(data[i].closed_at).unix();
+    var isopen = data[i].closed_at === null ? true : false;
+    if(data[i].assignee === null || data[i].title === null){
+      //skip content that has no one assigned
+      continue;
+    }
+    extract.push({'created':created.unix(),
+      'assignee': data[i].assignee.login,
+      'title': data[i].title,
+      'end':end,
+      'isopen':isopen
+    });
+  }
+// http://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects
+  extract.sort(function(a, b) {
+    return parseFloat(a.created) - parseFloat(b.created);
+});
+  // http://stackoverflow.com/questions/6712034/sort-array-by-firstname-alphabetically-in-javascript
+//   extract.sort(function(a, b){
+//     if(a.assignee < b.assignee) return -1;
+//     if(a.assignee > b.assignee) return 1;
+//     return 0;
+// });
+  var canvas = createCanvas(800, 1500);
+  canvas.parent('sketch');
+  // xAxis();
+  var y = 20;
+  var gutter = 2;
+  var h = ganttheight / extract.length - 1;
+  // console.log(extract);
+  for (var j = 0; j < extract.length; j++) {
+    y = y + h + gutter;
+    var x = map(extract[j].created, start.unix(), now.unix(), margin, width- margin);
+    // text(extract[j].assignee, x - 100, y + 9);
+    var xw= map(extract[j].end, start.unix(), now.unix(), margin, width- margin);
+    var w = xw - x;
+    var b = new Bar(x,y,w,h, extract[j]);
+    bars.push(b);
+    // rect(x, y, w, h);
+  }
+  var dates = enumerateDaysBetweenDates(start, now);
+  var linestep = (width-(margin*2))/dates.length;
+  for(var k = 0; k <= dates.length;k++){
+    var x1 = linestep*(k+1);
+    var y1 = 0;
+    var x2 = linestep*(k+1);
+    var y2 = height;
+    var l = new xAxisLine(x1,y1,x2,y2,dates[k],k);
+    xAxisLines.push(l);
+  }
+}
+
+
 function draw() {
   background(360, 0,100);
-  // xAxis();
   for(var l = 0; l < xAxisLines.length;l++){
     xAxisLines[l].rollOver();
   }
