@@ -57,6 +57,7 @@ This could also be done with an AJAX call.  </p>
    <span class="nx">now</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">();</span>
    <span class="nx">start</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">(</span><span class="s1">&#39;2015-10-21&#39;</span><span class="p">);</span>
   <span class="c1">// console.log(start);</span>
+
   <span class="nx">textSize</span><span class="p">(</span><span class="nx">txtHeight</span><span class="p">);</span>
   <span class="nx">colorMode</span><span class="p">(</span><span class="nx">HSL</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
 
@@ -68,6 +69,7 @@ This could also be done with an AJAX call.  </p>
     <span class="c1">// titles.push(data[i].title);</span>
     <span class="c1">// console.log(data[i].closed_at);</span>
     <span class="kd">var</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">closed_at</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">?</span> <span class="nx">now</span><span class="p">.</span><span class="nx">unix</span><span class="p">()</span> <span class="o">:</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">closed_at</span><span class="p">).</span><span class="nx">unix</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">isopen</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">closed_at</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span><span class="p">;</span>
     <span class="k">if</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">assignee</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">title</span> <span class="o">===</span> <span class="kc">null</span><span class="p">){</span>
       <span class="c1">//skip content that has no one assigned</span>
       <span class="k">continue</span><span class="p">;</span>
@@ -75,7 +77,8 @@ This could also be done with an AJAX call.  </p>
     <span class="nx">extract</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="s1">&#39;created&#39;</span><span class="o">:</span><span class="nx">created</span><span class="p">.</span><span class="nx">unix</span><span class="p">(),</span>
       <span class="s1">&#39;assignee&#39;</span><span class="o">:</span> <span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">assignee</span><span class="p">.</span><span class="nx">login</span><span class="p">,</span>
       <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">title</span><span class="p">,</span>
-      <span class="s1">&#39;end&#39;</span><span class="o">:</span><span class="nx">end</span>
+      <span class="s1">&#39;end&#39;</span><span class="o">:</span><span class="nx">end</span><span class="p">,</span>
+      <span class="s1">&#39;isopen&#39;</span><span class="o">:</span><span class="nx">isopen</span>
     <span class="p">});</span>
   <span class="p">}</span>
 <span class="c1">// http://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects</span>
@@ -141,6 +144,9 @@ This could also be done with an AJAX call.  </p>
   <span class="nx">push</span><span class="p">();</span>
   <span class="nx">translate</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
   <span class="nx">rotate</span><span class="p">(</span><span class="nx">radians</span><span class="p">(</span><span class="nx">deg</span><span class="p">));</span>
+  <span class="nx">textStyle</span><span class="p">(</span><span class="nx">BOLD</span><span class="p">);</span>
+  <span class="nx">textAlign</span><span class="p">(</span><span class="nx">LEFT</span><span class="p">);</span>
+
   <span class="nx">text</span><span class="p">(</span><span class="nx">txt</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
   <span class="nx">pop</span><span class="p">();</span>
 <span class="p">}</span>
@@ -156,13 +162,20 @@ This could also be done with an AJAX call.  </p>
   <span class="k">this</span><span class="p">.</span><span class="nx">over</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">overColor</span> <span class="o">=</span> <span class="nx">color</span><span class="p">(</span><span class="s1">&#39;#B75C84&#39;</span><span class="p">);</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">defaultColor</span> <span class="o">=</span> <span class="nx">color</span><span class="p">(</span><span class="s1">&#39;#B7AA5C&#39;</span><span class="p">);</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">closedColor</span> <span class="o">=</span> <span class="nx">color</span><span class="p">(</span><span class="s1">&#39;#7F7F7F&#39;</span><span class="p">);</span>
 
   <span class="k">this</span><span class="p">.</span><span class="nx">rollOver</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">isInside</span><span class="p">();</span>
     <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">over</span> <span class="o">===</span> <span class="kc">true</span><span class="p">){</span>
       <span class="nx">fill</span><span class="p">(</span><span class="s1">&#39;#000000&#39;</span><span class="p">);</span>
       <span class="nx">noStroke</span><span class="p">();</span>
-      <span class="nx">text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">assignee</span> <span class="o">+</span> <span class="s1">&#39;\n&#39;</span> <span class="o">+</span><span class="k">this</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="nx">mouseX</span><span class="p">,</span> <span class="nx">mouseY</span><span class="p">);</span>
+      <span class="nx">textAlign</span><span class="p">(</span><span class="nx">RIGHT</span><span class="p">);</span>
+      <span class="nx">textStyle</span><span class="p">(</span><span class="nx">BOLD</span><span class="p">);</span>
+      <span class="nx">textSize</span><span class="p">(</span><span class="mi">18</span><span class="p">);</span>
+      <span class="nx">text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">assignee</span> <span class="p">,</span> <span class="nx">mouseX</span><span class="p">,</span> <span class="nx">mouseY</span><span class="p">);</span>
+      <span class="nx">textStyle</span><span class="p">(</span><span class="nx">NORMAL</span><span class="p">);</span>
+      <span class="nx">textSize</span><span class="p">(</span><span class="nx">txtHeight</span><span class="p">);</span>
+      <span class="nx">text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">title</span> <span class="p">,</span> <span class="nx">mouseX</span><span class="p">,</span> <span class="nx">mouseY</span> <span class="o">+</span> <span class="p">(</span><span class="nx">txtHeight</span><span class="o">*</span><span class="mf">1.2</span><span class="p">));</span>
 
     <span class="p">}</span>
   <span class="p">}</span>
@@ -171,7 +184,11 @@ This could also be done with an AJAX call.  </p>
     <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">over</span> <span class="o">===</span> <span class="kc">true</span><span class="p">){</span>
       <span class="nx">fill</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">overColor</span><span class="p">);</span>
     <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-      <span class="nx">fill</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">defaultColor</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">isopen</span> <span class="o">===</span> <span class="kc">true</span><span class="p">){</span>
+        <span class="nx">fill</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">defaultColor</span><span class="p">);</span>
+      <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+        <span class="nx">fill</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">closedColor</span><span class="p">);</span>
+      <span class="p">}</span>
     <span class="p">}</span>
     <span class="nx">rect</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">w</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">h</span><span class="p">);</span>
   <span class="p">}</span>
@@ -245,10 +262,12 @@ This could also be done with an AJAX call.  </p>
     </div>
       
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
-      <script type="text/javascript" src="sketch.js"></script>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-      <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
-      <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
+      
+      <script type="text/javascript" src="sketch.js"></script>
+      <!-- <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script> -->
+      <!-- <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script> -->
+
       
       
     </body>

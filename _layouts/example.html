@@ -38,8 +38,11 @@
     </div>
       {% if page.engine == 'p5' %}
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
-      <script type="text/javascript" src="sketch.js"></script>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      {% if page.extra == 'jsonp-refresh' %}
+      {% include iss-now-jsonp-refresh.html %}
+      {% endif %}
+      <script type="text/javascript" src="sketch.js"></script>
       <script type="text/javascript" src="{{ site.baseurl }}/js/screenlog.min.js"></script>
       <script type="text/javascript" src="{{ site.baseurl }}/js/main.js"></script>
       {% endif %}

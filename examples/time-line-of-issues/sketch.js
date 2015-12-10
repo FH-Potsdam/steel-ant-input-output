@@ -27,6 +27,7 @@ function setup() {
     // titles.push(data[i].title);
     // console.log(data[i].closed_at);
     var end = data[i].closed_at === null ? now.unix() : moment(data[i].closed_at).unix();
+    var isopen = data[i].closed_at === null ? true : false;
     if(data[i].assignee === null || data[i].title === null){
       //skip content that has no one assigned
       continue;
@@ -34,7 +35,8 @@ function setup() {
     extract.push({'created':created.unix(),
       'assignee': data[i].assignee.login,
       'title': data[i].title,
-      'end':end
+      'end':end,
+      'isopen':isopen
     });
   }
 // http://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects
@@ -118,6 +120,7 @@ function Bar(_x,_y,_w,_h,data){
   this.over = false;
   this.overColor = color('#B75C84');
   this.defaultColor = color('#B7AA5C');
+  this.closedColor = color('#7F7F7F');
 
   this.rollOver = function(){
     this.isInside();
@@ -139,7 +142,11 @@ function Bar(_x,_y,_w,_h,data){
     if(this.over === true){
       fill(this.overColor);
     }else{
-      fill(this.defaultColor);
+      if (this.d.isopen === true){
+        fill(this.defaultColor);
+      }else{
+        fill(this.closedColor);
+      }
     }
     rect(this.x, this.y, this.w, this.h);
   }

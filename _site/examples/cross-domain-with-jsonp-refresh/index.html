@@ -3,7 +3,7 @@
 <!-- example layout -->
     <head>
         <link type="text/stylesheet" rel="shortcut icon" href="/steel-ant-input-output/favicon.ico">
-        <title>cross domain call with jsonp</title>
+        <title>cross domain call with jsonp refresh</title>
         <meta name="description" content="'Eingabe/Ausgabe' at FH-Potsdam (University of Applied Sciences Potsdam (Germany))">
         <meta name="author" content="fabiantheblind">
         <!--[if lt IE 9]>
@@ -46,14 +46,30 @@
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">iss</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">worldmap</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">tick</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">locations</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;http://api.open-notify.org/iss-now.json?callback=?&quot;</span><span class="p">;</span>
+<span class="cm">/**</span>
+<span class="cm"> *</span>
+<span class="cm"> * When the document is loaded call the the JSONP API of open notify</span>
+<span class="cm"> * and write to local storage</span>
+<span class="cm"> */</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;ready!&quot;</span><span class="p">);</span>
+  <span class="c1">// var counter = 0;</span>
+  <span class="kd">var</span> <span class="nx">timer</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;update sessionStorage from open notify API&#39;</span><span class="p">);</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// localStorage</span>
+      <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+      <span class="nx">iss</span> <span class="o">=</span> <span class="nx">data</span><span class="p">;</span>
+    <span class="p">});</span>
+  <span class="p">},</span> <span class="mi">5000</span><span class="p">);</span>
+<span class="p">});</span>
+
 
 <span class="cm">/**</span>
-<span class="cm"> * getData calls the the JSONP API of open notify</span>
-<span class="cm"> */</span>
-<span class="kd">function</span> <span class="nx">getData</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">iss</span> <span class="o">=</span> <span class="nx">data</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="cm">/**</span>
+<span class="cm"> * timeConverter</span>
 <span class="cm"> * just to see the date</span>
 <span class="cm"> * taken from</span>
 <span class="cm"> * http://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript</span>
@@ -72,22 +88,37 @@
 <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">setup</span><span class="p">()</span> <span class="p">{</span>
+
   <span class="nx">worldmap</span> <span class="o">=</span> <span class="nx">loadImage</span><span class="p">(</span><span class="s1">&#39;world-map.png&#39;</span><span class="p">);</span> <span class="c1">// load the image</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;We received the data from the ISS location via a jsonp callback&#39;</span><span class="p">);</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">timeConverter</span><span class="p">(</span><span class="nx">iss</span><span class="p">.</span><span class="nx">timestamp</span><span class="p">));</span> <span class="c1">// log the time</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">iss</span><span class="p">);</span><span class="c1">// log the data</span>
+  <span class="c1">// console.log(&#39;We received the data from the ISS location via a jsonp callback&#39;);</span>
+  <span class="c1">// console.log(timeConverter(iss.timestamp)); // log the time</span>
+  <span class="c1">// console.log(iss);// log the data</span>
   <span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">360</span><span class="p">,</span> <span class="mi">180</span><span class="p">);</span> <span class="c1">// draw the canvas</span>
   <span class="nx">canvas</span><span class="p">.</span><span class="nx">parent</span><span class="p">(</span><span class="s1">&#39;sketch&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">draw</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">tick</span><span class="o">%</span><span class="mi">500</span><span class="o">===</span><span class="mi">0</span><span class="p">){</span>
+    <span class="nx">iss</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">));</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">iss</span><span class="p">);</span>
+    <span class="c1">//</span>
   <span class="kd">var</span> <span class="nx">lat</span> <span class="o">=</span> <span class="nx">iss</span><span class="p">.</span><span class="nx">iss_position</span><span class="p">.</span><span class="nx">latitude</span><span class="p">;</span> <span class="c1">// get lat of the current position</span>
   <span class="kd">var</span> <span class="nx">lon</span> <span class="o">=</span> <span class="nx">iss</span><span class="p">.</span><span class="nx">iss_position</span><span class="p">.</span><span class="nx">longitude</span><span class="p">;</span><span class="c1">// get lat of the current position</span>
   <span class="nx">x</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">lon</span><span class="p">,</span> <span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">width</span><span class="p">);</span> <span class="c1">// map lon to x on our canvas</span>
   <span class="nx">y</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">lat</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">height</span><span class="p">);</span><span class="c1">// map lat to y on our canvas</span>
-<span class="p">}</span>
+  <span class="nx">locations</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">]);</span>
+  <span class="p">}</span>
+  <span class="nx">tick</span><span class="o">++</span><span class="p">;</span>
 
-<span class="kd">function</span> <span class="nx">draw</span><span class="p">()</span> <span class="p">{</span>
   <span class="c1">// draw all that stuff</span>
   <span class="nx">background</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
   <span class="nx">image</span><span class="p">(</span><span class="nx">worldmap</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">locations</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">){</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">locations</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+      <span class="nx">stroke</span><span class="p">(</span><span class="mi">128</span><span class="p">);</span>
+    <span class="nx">line</span><span class="p">[</span><span class="nx">locations</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="nx">locations</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="nx">locations</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="nx">locations</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]];</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
   <span class="nx">ellipse</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
 
 
@@ -129,13 +160,13 @@
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js"></script>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
       
+      <script type="text/javascript" src="refresh-iss-now.js"></script>
+      
       <script type="text/javascript" src="sketch.js"></script>
       <!-- <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script> -->
       <!-- <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script> -->
 
       
-      
-      <script src="http://api.open-notify.org/iss-now.json?callback=getData"></script>
       
     </body>
 </html>
