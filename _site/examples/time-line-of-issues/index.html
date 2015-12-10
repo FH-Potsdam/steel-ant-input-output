@@ -44,11 +44,36 @@ This could also be done with an AJAX call.  </p>
 <span class="kd">var</span> <span class="nx">timeFormat</span> <span class="o">=</span> <span class="s1">&#39;YYYY MM DD&#39;</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">margin</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">txtHeight</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">ganttheight</span> <span class="o">=</span> <span class="mi">550</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">ganttheight</span> <span class="o">=</span> <span class="mi">1100</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">now</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">start</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">step</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">bars</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="kd">var</span> <span class="nx">xAxisLines</span> <span class="o">=</span> <span class="p">[];</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * [enumerateDaysBetweenDates description]</span>
+<span class="cm"> * http://stackoverflow.com/questions/23795522/how-to-enumerate-dates-between-two-dates-in-moment</span>
+<span class="cm"> * @param  {[type]} startDate [description]</span>
+<span class="cm"> * @param  {[type]} endDate   [description]</span>
+<span class="cm"> * @return {[type]}           [description]</span>
+<span class="cm"> */</span>
+<span class="kd">var</span> <span class="nx">enumerateDaysBetweenDates</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">startDate</span><span class="p">,</span> <span class="nx">endDate</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">dates</span> <span class="o">=</span> <span class="p">[];</span>
+
+    <span class="kd">var</span> <span class="nx">currDate</span> <span class="o">=</span> <span class="nx">startDate</span><span class="p">.</span><span class="nx">clone</span><span class="p">().</span><span class="nx">startOf</span><span class="p">(</span><span class="s1">&#39;day&#39;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">lastDate</span> <span class="o">=</span> <span class="nx">endDate</span><span class="p">.</span><span class="nx">clone</span><span class="p">().</span><span class="nx">startOf</span><span class="p">(</span><span class="s1">&#39;day&#39;</span><span class="p">);</span>
+
+    <span class="k">while</span><span class="p">(</span><span class="nx">currDate</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;days&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">).</span><span class="nx">diff</span><span class="p">(</span><span class="nx">lastDate</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// console.log(currDate.toDate());</span>
+        <span class="nx">dates</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">currDate</span><span class="p">.</span><span class="nx">clone</span><span class="p">().</span><span class="nx">toDate</span><span class="p">());</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">dates</span><span class="p">;</span>
+<span class="p">};</span>
+
+
 <span class="kd">function</span> <span class="nx">preload</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">data</span> <span class="o">=</span> <span class="nx">loadJSON</span><span class="p">(</span><span class="s1">&#39;issue.json&#39;</span><span class="p">);</span>
 <span class="p">}</span>
@@ -91,7 +116,7 @@ This could also be done with an AJAX call.  </p>
 <span class="c1">//     if(a.assignee &gt; b.assignee) return 1;</span>
 <span class="c1">//     return 0;</span>
 <span class="c1">// });</span>
-  <span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">800</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">1500</span><span class="p">);</span>
   <span class="nx">canvas</span><span class="p">.</span><span class="nx">parent</span><span class="p">(</span><span class="s1">&#39;sketch&#39;</span><span class="p">);</span>
   <span class="c1">// xAxis();</span>
   <span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
@@ -109,7 +134,74 @@ This could also be done with an AJAX call.  </p>
     <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bar</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="nx">w</span><span class="p">,</span><span class="nx">h</span><span class="p">,</span> <span class="nx">extract</span><span class="p">[</span><span class="nx">j</span><span class="p">]);</span>
     <span class="nx">bars</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
     <span class="c1">// rect(x, y, w, h);</span>
+  <span class="p">}</span>
 
+  <span class="kd">var</span> <span class="nx">dates</span> <span class="o">=</span> <span class="nx">enumerateDaysBetweenDates</span><span class="p">(</span><span class="nx">start</span><span class="p">,</span> <span class="nx">now</span><span class="p">);</span>
+
+  <span class="kd">var</span> <span class="nx">linestep</span> <span class="o">=</span> <span class="p">(</span><span class="nx">width</span><span class="o">-</span><span class="p">(</span><span class="nx">margin</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span><span class="o">/</span><span class="nx">dates</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+
+  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">k</span> <span class="o">&lt;=</span> <span class="nx">dates</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">k</span><span class="o">++</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">x1</span> <span class="o">=</span> <span class="nx">linestep</span><span class="o">*</span><span class="p">(</span><span class="nx">k</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">y1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">x2</span> <span class="o">=</span> <span class="nx">linestep</span><span class="o">*</span><span class="p">(</span><span class="nx">k</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">y2</span> <span class="o">=</span> <span class="nx">height</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">l</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">xAxisLine</span><span class="p">(</span><span class="nx">x1</span><span class="p">,</span><span class="nx">y1</span><span class="p">,</span><span class="nx">x2</span><span class="p">,</span><span class="nx">y2</span><span class="p">,</span><span class="nx">dates</span><span class="p">[</span><span class="nx">k</span><span class="p">],</span><span class="nx">k</span><span class="p">);</span>
+    <span class="nx">xAxisLines</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">l</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="kd">function</span> <span class="nx">xAxisLine</span> <span class="p">(</span><span class="nx">_x1</span><span class="p">,</span><span class="nx">_y1</span><span class="p">,</span><span class="nx">_x2</span><span class="p">,</span><span class="nx">_y2</span><span class="p">,</span><span class="nx">_d</span><span class="p">,</span><span class="nx">_i</span><span class="p">){</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">=</span> <span class="nx">_i</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">x1</span> <span class="o">=</span> <span class="nx">_x1</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">y1</span> <span class="o">=</span> <span class="nx">_y1</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">x2</span> <span class="o">=</span> <span class="nx">_x2</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">y2</span> <span class="o">=</span> <span class="nx">_y2</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">date</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">_d</span><span class="p">);</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">defaultColor</span> <span class="o">=</span> <span class="nx">color</span><span class="p">(</span><span class="s1">&#39;#C9C9C9&#39;</span><span class="p">);</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">strongColor</span> <span class="o">=</span> <span class="nx">color</span><span class="p">(</span><span class="s1">&#39;#000000&#39;</span><span class="p">);</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">rollOverColor</span> <span class="o">=</span> <span class="nx">color</span><span class="p">(</span><span class="s1">&#39;#8CDDFC&#39;</span><span class="p">);</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">isOver</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">txt</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">date</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">timeFormat</span><span class="p">);</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">tw</span> <span class="o">=</span> <span class="nx">textWidth</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">txt</span><span class="p">);</span>
+
+
+  <span class="k">this</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">stroke</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">defaultColor</span><span class="p">);</span>
+    <span class="nx">strokeWeight</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="nx">line</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x1</span><span class="p">,</span><span class="k">this</span><span class="p">.</span><span class="nx">y1</span><span class="p">,</span><span class="k">this</span><span class="p">.</span><span class="nx">x2</span><span class="p">,</span><span class="k">this</span><span class="p">.</span><span class="nx">y2</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="nx">rollOver</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">isInside</span><span class="p">();</span>
+    <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">isOver</span><span class="o">===</span><span class="kc">true</span><span class="p">){</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">y2</span> <span class="o">=</span> <span class="nx">height</span> <span class="o">-</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">tw</span><span class="o">*</span><span class="mf">1.5</span><span class="p">);</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">textDisplay</span><span class="p">();</span>
+    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">y2</span> <span class="o">=</span> <span class="nx">height</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">isInside</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">mouseX</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">x1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="nx">mouseX</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">x1</span> <span class="o">+</span> <span class="mi">2</span><span class="p">){</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">isOver</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">isOver</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">run</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">display</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="nx">textDisplay</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">noStroke</span><span class="p">();</span>
+  <span class="nx">fill</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">defaultColor</span><span class="p">);</span>
+  <span class="nx">push</span><span class="p">();</span>
+  <span class="nx">translate</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x1</span><span class="p">,</span> <span class="nx">height</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">tw</span><span class="p">);</span>
+  <span class="nx">rotate</span><span class="p">(</span><span class="nx">radians</span><span class="p">(</span><span class="mi">90</span><span class="p">));</span>
+  <span class="nx">textStyle</span><span class="p">(</span><span class="nx">BOLD</span><span class="p">);</span>
+  <span class="nx">textAlign</span><span class="p">(</span><span class="nx">LEFT</span><span class="p">);</span>
+  <span class="nx">text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">txt</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+  <span class="nx">pop</span><span class="p">();</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
@@ -118,7 +210,7 @@ This could also be done with an AJAX call.  </p>
   <span class="nx">fill</span><span class="p">(</span><span class="s1">&#39;#000000&#39;</span><span class="p">);</span>
   <span class="kd">var</span> <span class="nx">step</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">twstart</span> <span class="o">=</span> <span class="nx">textWidth</span><span class="p">(</span><span class="nx">start</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">timeFormat</span><span class="p">));</span>
-  <span class="nx">textRotate</span><span class="p">(</span><span class="nx">margin</span> <span class="o">+</span> <span class="p">(</span><span class="nx">txtHeight</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="nx">height</span> <span class="o">-</span> <span class="nx">twstart</span><span class="o">-</span> <span class="nx">margin</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="nx">start</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">timeFormat</span><span class="p">));</span>
+  <span class="nx">textRotate</span><span class="p">(</span><span class="nx">margin</span> <span class="o">+</span> <span class="p">(</span><span class="nx">txtHeight</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="nx">height</span> <span class="o">-</span> <span class="nx">twstart</span> <span class="o">-</span> <span class="nx">margin</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="nx">start</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">timeFormat</span><span class="p">));</span>
 
   <span class="kd">var</span> <span class="nx">dr</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">.</span><span class="nx">range</span><span class="p">(</span><span class="nx">start</span><span class="p">,</span> <span class="nx">now</span><span class="p">);</span>
   <span class="nx">dr</span><span class="p">.</span><span class="nx">center</span><span class="p">();</span>
@@ -130,15 +222,18 @@ This could also be done with an AJAX call.  </p>
   <span class="kd">var</span> <span class="nx">twnow</span> <span class="o">=</span> <span class="nx">textWidth</span><span class="p">(</span><span class="nx">now</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">timeFormat</span><span class="p">));</span>
   <span class="nx">textRotate</span><span class="p">((</span><span class="nx">width</span> <span class="o">-</span> <span class="nx">margin</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nx">txtHeight</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="nx">height</span> <span class="o">-</span><span class="nx">twnow</span> <span class="o">-</span><span class="nx">margin</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="nx">now</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">timeFormat</span><span class="p">));</span>
 
-  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">margin</span><span class="p">;</span> <span class="nx">x</span> <span class="o">&lt;=</span> <span class="nx">width</span> <span class="o">-</span><span class="nx">margin</span><span class="p">;</span> <span class="nx">x</span> <span class="o">+=</span><span class="nx">step</span><span class="p">){</span>
-    <span class="nx">line</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">height</span> <span class="o">-</span> <span class="nx">margin</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">height</span><span class="p">);</span>
+  <span class="nx">stroke</span><span class="p">(</span><span class="s1">&#39;#C9C9C9&#39;</span><span class="p">);</span>
+  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">margin</span><span class="p">;</span> <span class="nx">x</span> <span class="o">&lt;=</span> <span class="nx">width</span> <span class="o">-</span> <span class="nx">margin</span><span class="p">;</span> <span class="nx">x</span> <span class="o">+=</span><span class="nx">step</span><span class="p">){</span>
+    <span class="nx">line</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">height</span><span class="p">);</span>
   <span class="p">}</span>
-  <span class="nx">strokeWeight</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
   <span class="nx">stroke</span><span class="p">(</span><span class="s1">&#39;#000000&#39;</span><span class="p">);</span>
+
+  <span class="nx">strokeWeight</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
   <span class="nx">line</span><span class="p">(</span><span class="nx">margin</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">margin</span><span class="p">,</span> <span class="nx">height</span><span class="p">);</span>
   <span class="nx">line</span><span class="p">(</span><span class="nx">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">height</span><span class="p">);</span>
   <span class="nx">line</span><span class="p">(</span><span class="nx">width</span> <span class="o">-</span> <span class="nx">margin</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">width</span> <span class="o">-</span> <span class="nx">margin</span><span class="p">,</span> <span class="nx">height</span><span class="p">);</span>
 <span class="p">}</span>
+
 
 <span class="kd">function</span> <span class="nx">textRotate</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="nx">deg</span><span class="p">,</span><span class="nx">txt</span><span class="p">){</span>
   <span class="nx">push</span><span class="p">();</span>
@@ -209,13 +304,20 @@ This could also be done with an AJAX call.  </p>
 
 <span class="kd">function</span> <span class="nx">draw</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">background</span><span class="p">(</span><span class="mi">360</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+  <span class="c1">// xAxis();</span>
+  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">l</span> <span class="o">&lt;</span> <span class="nx">xAxisLines</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">l</span><span class="o">++</span><span class="p">){</span>
+    <span class="nx">xAxisLines</span><span class="p">[</span><span class="nx">l</span><span class="p">].</span><span class="nx">rollOver</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">k</span> <span class="o">&lt;</span> <span class="nx">xAxisLines</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">k</span><span class="o">++</span><span class="p">){</span>
+    <span class="nx">xAxisLines</span><span class="p">[</span><span class="nx">k</span><span class="p">].</span><span class="nx">run</span><span class="p">();</span>
+  <span class="p">}</span>
+
   <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">bars</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">++</span><span class="p">){</span>
     <span class="nx">bars</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">run</span><span class="p">();</span>
   <span class="p">}</span>
     <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">bars</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span> <span class="o">++</span><span class="p">){</span>
     <span class="nx">bars</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">rollOver</span><span class="p">();</span>
   <span class="p">}</span>
-  <span class="nx">xAxis</span><span class="p">();</span>
 <span class="p">}</span></code></pre></div>
 
 <h2>index.html</h2>
@@ -265,9 +367,8 @@ This could also be done with an AJAX call.  </p>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
       
       <script type="text/javascript" src="sketch.js"></script>
-      <!-- <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script> -->
-      <!-- <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script> -->
-
+      <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
       
       
     </body>

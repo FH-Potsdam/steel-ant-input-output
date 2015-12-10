@@ -96,7 +96,7 @@
     </object>
     <object type="LMREQUEST" id="z107">
         <attribute name="uuid" type="string">8D4E5388-F842-439C-A11B-4833574E8E0A</attribute>
-        <attribute name="url" type="string">https://api.github.com/repos/fh-potsdam/steel-ant-input-output/issues?per_page=100\u2600page=1\u2600state=all</attribute>
+        <attribute name="url" type="string">https://api.github.com/repos/fh-potsdam/steel-ant-input-output/issues?per_page=100\u2600page=4\u2600state=all</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>

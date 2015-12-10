@@ -31,28 +31,37 @@
 
     <div class="row">
         <div class="col-md-12" id="content">
-        <h1>cross domain call with jsonp</h1>
+        <h1>cross domain call with jsonp refresh</h1>
 
-<p>To call the open-notify.org API ISS now from any domain we need to make a cross domain call. This is normally restricted. Luckily the open-notify.org API allows to make JSONP calls. See this <a href="http://stackoverflow.com/questions/11736431/make-cross-domain-ajax-jsonp-request-with-jquery">stackoverflow</a> for further insight.  </p>
+<p>To call the open-notify.org API ISS now from any domain we need to make a cross domain call. This is normally restricted. Luckily the open-notify.org API allows to make JSONP calls. See this <a href="http://stackoverflow.com/questions/11736431/make-cross-domain-ajax-jsonp-request-with-jquery">stackoverflow</a> for further insight. The solution used for only one jsonp call depends on having the callBack function hardcoded into our HTML. What if we want to refresh that data over time? The HTML gets read once and that is it.</p>
 
-<p>It&#39;s important that you have the this line in your index.html file:  </p>
+<p><em>(jQuery and AJAX enter the stage, crowd applauds)</em>  </p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://api.open-notify.org/iss-now.json?callback=getData&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></div>
+<p>In this example we make <a href="http://api.jquery.com/jquery.ajax/">jQuery.ajax</a> call to the open-notify API. Now we run into another problem. First the callback function is asynchron to the rest of our sketch. Second the data only exists in the callback function of the ajax call. </p>
 
-<p>This technique should also work for the pass time and the astros API.  </p>
+<p><em>(sessionStorage enters as well, crowd goes wild)</em></p>
+
+<p>The solution is to save a <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">stringified</a> verison of the data into the <a href="https://developer.mozilla.org/en/docs/Web/API/Window/sessionStorage">sessionStorage</a> and restore that data in our draw function later on
+.<br>
+This technique should also work for the pass time and the astros API.  </p>
+
+<p><em>(Crowd goes wild, standing ovations)</em></p>
 
 <h2>sketch.js</h2>
 
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">iss</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">worldmap</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">tick</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">locations</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;http://api.open-notify.org/iss-now.json?callback=?&quot;</span><span class="p">;</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">iss</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span> <span class="c1">// will hold the data</span>
+<span class="kd">var</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">;</span> <span class="c1">// locations on screen</span>
+<span class="kd">var</span> <span class="nx">worldmap</span><span class="p">;</span> <span class="c1">// for the image</span>
+<span class="kd">var</span> <span class="nx">tick</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// ticks away the time</span>
+<span class="kd">var</span> <span class="nx">locations</span> <span class="o">=</span> <span class="p">[];</span> <span class="c1">// keep all that loctions on screen for a trail</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;http://api.open-notify.org/iss-now.json?callback=?&quot;</span><span class="p">;</span>
+
 <span class="cm">/**</span>
 <span class="cm"> *</span>
 <span class="cm"> * When the document is loaded call the the JSONP API of open notify</span>
 <span class="cm"> * and write to local storage</span>
+<span class="cm"> * This is not part of the P5.js this uses jQuery</span>
+<span class="cm"> * It will update every 5 seconds</span>
 <span class="cm"> */</span>
 <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;ready!&quot;</span><span class="p">);</span>
@@ -62,67 +71,62 @@
     <span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
       <span class="c1">// localStorage</span>
       <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
-      <span class="nx">iss</span> <span class="o">=</span> <span class="nx">data</span><span class="p">;</span>
+      <span class="c1">// iss = data;</span>
     <span class="p">});</span>
   <span class="p">},</span> <span class="mi">5000</span><span class="p">);</span>
 <span class="p">});</span>
-
-
 <span class="cm">/**</span>
-<span class="cm"> * timeConverter</span>
-<span class="cm"> * just to see the date</span>
-<span class="cm"> * taken from</span>
-<span class="cm"> * http://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript</span>
+<span class="cm"> * setup is called once</span>
 <span class="cm"> */</span>
-<span class="kd">function</span> <span class="nx">timeConverter</span><span class="p">(</span><span class="nx">UNIX_timestamp</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">UNIX_timestamp</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
-  <span class="kd">var</span> <span class="nx">months</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Jan&#39;</span><span class="p">,</span> <span class="s1">&#39;Feb&#39;</span><span class="p">,</span> <span class="s1">&#39;Mar&#39;</span><span class="p">,</span> <span class="s1">&#39;Apr&#39;</span><span class="p">,</span> <span class="s1">&#39;May&#39;</span><span class="p">,</span> <span class="s1">&#39;Jun&#39;</span><span class="p">,</span> <span class="s1">&#39;Jul&#39;</span><span class="p">,</span> <span class="s1">&#39;Aug&#39;</span><span class="p">,</span> <span class="s1">&#39;Sep&#39;</span><span class="p">,</span> <span class="s1">&#39;Oct&#39;</span><span class="p">,</span> <span class="s1">&#39;Nov&#39;</span><span class="p">,</span> <span class="s1">&#39;Dec&#39;</span><span class="p">];</span>
-  <span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>
-  <span class="kd">var</span> <span class="nx">month</span> <span class="o">=</span> <span class="nx">months</span><span class="p">[</span><span class="nx">a</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()];</span>
-  <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">getDate</span><span class="p">();</span>
-  <span class="kd">var</span> <span class="nx">hour</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">getHours</span><span class="p">();</span>
-  <span class="kd">var</span> <span class="nx">min</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">();</span>
-  <span class="kd">var</span> <span class="nx">sec</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">();</span>
-  <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="nx">date</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">month</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">year</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">hour</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">min</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">sec</span><span class="p">;</span>
-  <span class="k">return</span> <span class="nx">time</span><span class="p">;</span>
-<span class="p">}</span>
-
 <span class="kd">function</span> <span class="nx">setup</span><span class="p">()</span> <span class="p">{</span>
-
+  <span class="c1">// executed once</span>
   <span class="nx">worldmap</span> <span class="o">=</span> <span class="nx">loadImage</span><span class="p">(</span><span class="s1">&#39;world-map.png&#39;</span><span class="p">);</span> <span class="c1">// load the image</span>
   <span class="c1">// console.log(&#39;We received the data from the ISS location via a jsonp callback&#39;);</span>
   <span class="c1">// console.log(timeConverter(iss.timestamp)); // log the time</span>
   <span class="c1">// console.log(iss);// log the data</span>
   <span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">360</span><span class="p">,</span> <span class="mi">180</span><span class="p">);</span> <span class="c1">// draw the canvas</span>
-  <span class="nx">canvas</span><span class="p">.</span><span class="nx">parent</span><span class="p">(</span><span class="s1">&#39;sketch&#39;</span><span class="p">);</span>
+  <span class="nx">canvas</span><span class="p">.</span><span class="nx">parent</span><span class="p">(</span><span class="s1">&#39;sketch&#39;</span><span class="p">);</span> <span class="c1">// where should our image go</span>
 <span class="p">}</span>
-
+<span class="cm">/**</span>
+<span class="cm"> * draw is called all the time</span>
+<span class="cm"> * this is P5.js specific</span>
+<span class="cm"> */</span>
 <span class="kd">function</span> <span class="nx">draw</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">if</span><span class="p">(</span><span class="nx">tick</span><span class="o">%</span><span class="mi">500</span><span class="o">===</span><span class="mi">0</span><span class="p">){</span>
-    <span class="nx">iss</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">));</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">iss</span><span class="p">);</span>
-    <span class="c1">//</span>
-  <span class="kd">var</span> <span class="nx">lat</span> <span class="o">=</span> <span class="nx">iss</span><span class="p">.</span><span class="nx">iss_position</span><span class="p">.</span><span class="nx">latitude</span><span class="p">;</span> <span class="c1">// get lat of the current position</span>
-  <span class="kd">var</span> <span class="nx">lon</span> <span class="o">=</span> <span class="nx">iss</span><span class="p">.</span><span class="nx">iss_position</span><span class="p">.</span><span class="nx">longitude</span><span class="p">;</span><span class="c1">// get lat of the current position</span>
-  <span class="nx">x</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">lon</span><span class="p">,</span> <span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">width</span><span class="p">);</span> <span class="c1">// map lon to x on our canvas</span>
-  <span class="nx">y</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">lat</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">height</span><span class="p">);</span><span class="c1">// map lat to y on our canvas</span>
-  <span class="nx">locations</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">]);</span>
-  <span class="p">}</span>
-  <span class="nx">tick</span><span class="o">++</span><span class="p">;</span>
-
-  <span class="c1">// draw all that stuff</span>
-  <span class="nx">background</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-  <span class="nx">image</span><span class="p">(</span><span class="nx">worldmap</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-  <span class="k">if</span><span class="p">(</span><span class="nx">locations</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">){</span>
-    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">locations</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
-      <span class="nx">stroke</span><span class="p">(</span><span class="mi">128</span><span class="p">);</span>
-    <span class="nx">line</span><span class="p">[</span><span class="nx">locations</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="nx">locations</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="nx">locations</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="nx">locations</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]];</span>
+  <span class="c1">// so we make a check in the local storage every 500 ticks</span>
+  <span class="c1">// this is not milliseconds</span>
+  <span class="c1">// tried it with millis created an error</span>
+  <span class="c1">// but it was late at night so maybe you have more luck</span>
+  <span class="c1">//</span>
+  <span class="c1">// @TODO: make it work with millis so it sync-isher with the ajax call</span>
+  <span class="c1">// @TODO: find out why we can store data from the ajax call global</span>
+  <span class="c1">//</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">tick</span> <span class="o">%</span> <span class="mi">500</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">iss</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">));</span> <span class="c1">// get the data from storage</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">iss</span><span class="p">);</span> <span class="c1">// just to prof that we have data</span>
+    <span class="c1">// so when we got the data we can</span>
+    <span class="c1">// grab lat/lon from it and draw our marker</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">iss</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">lat</span> <span class="o">=</span> <span class="nx">iss</span><span class="p">.</span><span class="nx">iss_position</span><span class="p">.</span><span class="nx">latitude</span><span class="p">;</span> <span class="c1">// get lat of the current position</span>
+      <span class="kd">var</span> <span class="nx">lon</span> <span class="o">=</span> <span class="nx">iss</span><span class="p">.</span><span class="nx">iss_position</span><span class="p">.</span><span class="nx">longitude</span><span class="p">;</span> <span class="c1">// get lat of the current position</span>
+      <span class="nx">x</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">lon</span><span class="p">,</span> <span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">width</span><span class="p">);</span> <span class="c1">// map lon to x on our canvas</span>
+      <span class="nx">y</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">lat</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">height</span><span class="p">);</span> <span class="c1">// map lat to y on our canvas</span>
+      <span class="nx">locations</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">]);</span> <span class="c1">// store them for the trail</span>
     <span class="p">}</span>
   <span class="p">}</span>
-  <span class="nx">ellipse</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+  <span class="nx">tick</span><span class="o">++</span><span class="p">;</span><span class="c1">// tick tock some time has passed</span>
 
-
-
+  <span class="c1">// draw all that stuff</span>
+  <span class="nx">background</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// black</span>
+  <span class="nx">image</span><span class="p">(</span><span class="nx">worldmap</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// the world map.</span>
+  <span class="c1">// if we have enough points for a trail we draw it</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">locations</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">locations</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">stroke</span><span class="p">(</span><span class="mi">128</span><span class="p">);</span> <span class="c1">// make it visible on the map</span>
+      <span class="c1">// locations is a 2 dim array [index][0] = x | [index][i] = y</span>
+      <span class="nx">line</span><span class="p">[</span><span class="nx">locations</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nx">locations</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="nx">locations</span><span class="p">[</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nx">locations</span><span class="p">[</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]];</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">ellipse</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span> <span class="c1">// and our marker</span>
 <span class="p">}</span></code></pre></div>
 
 <h2>index.html</h2>
@@ -139,7 +143,6 @@
     <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;http://code.jquery.com/jquery-2.1.4.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
     <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.17/p5.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
     <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;sketch.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://api.open-notify.org/iss-now.json?callback=getData&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;sketch&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
   <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span></code></pre></div>
@@ -163,9 +166,8 @@
       <script type="text/javascript" src="refresh-iss-now.js"></script>
       
       <script type="text/javascript" src="sketch.js"></script>
-      <!-- <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script> -->
-      <!-- <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script> -->
-
+      <script type="text/javascript" src="/steel-ant-input-output/js/screenlog.min.js"></script>
+      <script type="text/javascript" src="/steel-ant-input-output/js/main.js"></script>
       
       
     </body>
