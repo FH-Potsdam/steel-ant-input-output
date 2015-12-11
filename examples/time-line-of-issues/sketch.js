@@ -213,7 +213,6 @@ function setup() {
   }
 }
 
-
 function draw() {
   background(360, 0,100);
   for(var l = 0; l < xAxisLines.length;l++){
